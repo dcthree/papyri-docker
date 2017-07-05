@@ -6,12 +6,20 @@ services:
     - "3000:3000"
     volumes:
     - repo:/repo
+    links:
+    - "xsugar"
     depends_on:
       repo_clone:
+        condition: service_healthy
+      xsugar:
         condition: service_healthy
   repo_clone:
     build: repo_clone
     volumes:
     - repo:/repo
+  xsugar:
+    build: xsugar
+    ports:
+    - "9999:9999"
 volumes:
   repo:
