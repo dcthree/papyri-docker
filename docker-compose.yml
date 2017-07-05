@@ -5,7 +5,7 @@ services:
     ports:
     - "3000:3000"
     volumes:
-    - repo:/repo
+    - repo:/srv
     links:
     - "xsugar"
     depends_on:
@@ -16,10 +16,29 @@ services:
   repo_clone:
     build: repo_clone
     volumes:
-    - repo:/repo
+    - repo:/srv
   xsugar:
     build: xsugar
     ports:
     - "9999:9999"
+  navigator:
+    build: navigator
+    depends_on:
+      repo_clone:
+        condition: service_healthy
+      fuseki:
+        condition: service_started
+    volumes:
+    - repo:/srv
+    links:
+    - "fuseki"
+  fuseki:
+    image: ryanfb/fuseki
+    environment:
+    - OPTS=--loc=/data --update --port=8090 /pi
+    - JVM_ARGS=-Xmx4096M
+    - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+    ports:
+    - "8090:8090"
 volumes:
   repo:
