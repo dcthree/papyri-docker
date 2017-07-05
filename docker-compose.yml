@@ -1,6 +1,17 @@
-version: "3"
+version: "2.2"
 services:
   sosol:
     build: sosol
     ports:
     - "3000:3000"
+    volumes:
+    - repo:/repo
+    depends_on:
+      repo_clone:
+        condition: service_healthy
+  repo_clone:
+    build: repo_clone
+    volumes:
+    - repo:/repo
+volumes:
+  repo:
