@@ -1,8 +1,6 @@
 FROM ubuntu:xenial
 MAINTAINER Ryan Baumann <ryan.baumann@gmail.com>
 
-# Install the Ubuntu packages.
-RUN echo deb-src http://archive.linux.duke.edu/ubuntu/ trusty main >> /etc/apt/sources.list
 # Install Git
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
