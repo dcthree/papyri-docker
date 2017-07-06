@@ -8,7 +8,8 @@ if [ ! -d "/srv/data/papyri.info/solr" ]; then
   mkdir -p /srv/data/papyri.info && cp -R /navigator/pn-solr /srv/data/papyri.info/solr
 fi
 
+cd /srv/data/papyri.info/git/navigator/pn-dispatcher && mvn clean package
+
 sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-mapping/src/info/papyri/map.clj
 cd /srv/data/papyri.info/git/navigator/pn-mapping && lein run map-all
-
-cd /srv/data/papyri.info/git/navigator/pn-dispatcher && mvn clean package
+touch /root/mapping_done
