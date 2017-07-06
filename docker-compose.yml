@@ -32,6 +32,18 @@ services:
     - repo:/srv
     links:
     - "fuseki"
+  indexer:
+    build: indexer
+    depends_on:
+      navigator:
+        condition: service_healthy
+      fuseki:
+        condition: service_started
+    volumes:
+    - repo:/srv
+    links:
+    - "fuseki"
+    - "solr"
   fuseki:
     image: ryanfb/fuseki
     environment:
