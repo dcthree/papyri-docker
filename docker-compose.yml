@@ -40,5 +40,14 @@ services:
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
     ports:
     - "8090:8090"
+  solr:
+    build: tomcat-solr
+    ports:
+    - "8080:8080"
+    volumes:
+    - repo:/srv
+    depends_on:
+      navigator:
+        condition: service_healthy
 volumes:
   repo:

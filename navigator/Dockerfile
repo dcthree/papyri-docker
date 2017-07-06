@@ -17,4 +17,5 @@ RUN git clone --branch v2.0-rc1 --single-branch https://github.com/DCLP/navigato
 ADD https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein /usr/local/bin/lein
 RUN chmod a+x /usr/local/bin/lein
 ADD . /root
+HEALTHCHECK --retries=9999 CMD /root/check-solr-war.sh
 CMD /root/run-mapping.sh
