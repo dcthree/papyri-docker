@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e "/root/mapping_done" ]; then
+if [ -e "/srv/data/papyri.info/mapping_done" ]; then
   exit 0
 else
   exit 1
