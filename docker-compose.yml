@@ -2,8 +2,8 @@ version: "2.2"
 services:
   sosol:
     build: sosol
-    ports:
-    - "3000:3000"
+    # ports:
+    # - "3000:3000"
     volumes:
     - repo:/srv
     links:
@@ -19,8 +19,8 @@ services:
     - repo:/srv
   xsugar:
     build: xsugar
-    ports:
-    - "9999:9999"
+    # ports:
+    # - "9999:9999"
     volumes:
     - maven:/root/.m2
   navigator:
@@ -54,12 +54,12 @@ services:
     - OPTS=--loc=/data --update --port=8090 /pi
     - JVM_ARGS=-Xmx4096M
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-    ports:
-    - "8090:8090"
+    # ports:
+    # - "8090:8090"
   solr:
     build: tomcat-solr
-    ports:
-    - "8080:8080"
+    # ports:
+    # - "8080:8080"
     volumes:
     - repo:/srv
     depends_on:
