@@ -1,5 +1,16 @@
 version: "2.2"
 services:
+  httpd:
+    build: apache
+    links:
+    - "sosol"
+    - "xsugar"
+    - "fuseki"
+    - "solr"
+    volumes:
+    - repo:/srv
+    ports:
+    - "8000:80"
   sosol:
     build: sosol
     # ports:
@@ -50,6 +61,8 @@ services:
     - "solr"
   fuseki:
     image: ryanfb/fuseki
+    volumes:
+    - repo:/srv
     environment:
     - OPTS=--loc=/data --update --port=8090 /pi
     - JVM_ARGS=-Xmx4096M
