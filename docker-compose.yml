@@ -69,10 +69,22 @@ services:
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
     # ports:
     # - "8090:8090"
+  mysql:
+    image: mysql
+    environment:
+    - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    - MYSQL_DATABASE=pn
+    - MYSQL_USER=pn
+    - MYSQL_PASSWORD=p4pyr!
+    volumes:
+    - ./mysql:/docker-entrypoint-initdb.d
   solr:
     build: tomcat-solr
-    # ports:
-    # - "8080:8080"
+    links:
+    - "mysql"
+    - "fuseki"
+    ports:
+    - "8080:8080"
     volumes:
     - repo:/srv
     depends_on:
