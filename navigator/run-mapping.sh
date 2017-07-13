@@ -9,6 +9,8 @@ if [ ! -d "/srv/data/papyri.info/solr" ]; then
 fi
 
 cd /srv/data/papyri.info/git/navigator/pn-dispatcher && mvn clean package
+sed -i -e 's/litpap.info\/maven/dev.papyri.info\/maven/' /srv/data/papyri.info/git/navigator/pn-sync/pom.xml
+cd /srv/data/papyri.info/git/navigator/pn-sync && mvn clean compile war:war
 
 if [ ! -e "/srv/data/papyri.info/mapping_done" ]; then
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-mapping/src/info/papyri/map.clj
