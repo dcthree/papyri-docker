@@ -21,7 +21,7 @@ sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
 sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf
 
 # needs pn-sync run once
-sed -i -e '/^RewriteRule...index.html.*/d' /usr/local/apache2/conf/httpd.conf
+# sed -i -e '/^RewriteRule...index.html.*/d' /usr/local/apache2/conf/httpd.conf
 
 # sed -i -e '/^ErrorLog.*$/d' /usr/local/apache2/conf/httpd.conf
 # sed -i -e '/^CustomLog.*$/d' /usr/local/apache2/conf/httpd.conf
