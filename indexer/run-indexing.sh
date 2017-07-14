@@ -1,7 +1,8 @@
 #!/bin/bash
 
 if [ ! -d "/srv/data/papyri.info/git/navigator" ]; then
-  mkdir -p /srv/data/papyri.info/git && cp -R /navigator /srv/data/papyri.info/git/navigator/
+  echo "/srv/data/papyri.info/git/navigator not found! This directory should be copied in by the navigator docker container"
+  exit 1
 fi
 
 if [ ! -d "/srv/data/papyri.info/git/navigator/epidoc-xslt" ]; then
