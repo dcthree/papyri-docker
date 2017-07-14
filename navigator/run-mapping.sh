@@ -8,7 +8,12 @@ if [ ! -d "/srv/data/papyri.info/solr" ]; then
   mkdir -p /srv/data/papyri.info && cp -R /navigator/pn-solr /srv/data/papyri.info/solr
 fi
 
+# dispatch
+sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/java/info/papyri/dispatch/browse/CollectionBrowser.java
+cp /root/dispatch-web.xml /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
 cd /srv/data/papyri.info/git/navigator/pn-dispatcher && mvn clean package
+
+# pn-sync
 sed -i -e 's/litpap.info\/maven/dev.papyri.info\/maven/' /srv/data/papyri.info/git/navigator/pn-sync/pom.xml
 sed -i -e 's/localhost:8083/localhost:8080/' /srv/data/papyri.info/git/navigator/pn-sync/src/main/java/info/papyri/sync/Publisher.java
 sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-sync/src/main/java/info/papyri/sync/GitWrapper.java
