@@ -56,7 +56,11 @@ RUN java -version
 RUN rbenv install && rbenv rehash && gem install bundler && rbenv rehash && bundle install && jruby -v
 RUN RAILS_ENV=test ./script/setup
 RUN bundle exec rake db:migrate && bundle exec rake git:db:canonical:clone
+# RUN bundle exec warble war
 
 # Finally, start the application
-EXPOSE 3000
-CMD bundle exec rails server
+# EXPOSE 3000
+# CMD bundle exec rails server
+
+HEALTHCHECK --retries=9999 CMD /root/warble-done.sh
+CMD /root/sosol/migrate-and-copy.sh

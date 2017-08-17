@@ -18,6 +18,9 @@
 --
 -- Table structure for table `sync_history`
 --
+CREATE DATABASE IF NOT EXISTS pn CHARACTER SET utf8;
+GRANT ALL PRIVILEGES ON pn.* TO 'pn'@'%' WITH GRANT OPTION;
+USE pn;
 
 DROP TABLE IF EXISTS `sync_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

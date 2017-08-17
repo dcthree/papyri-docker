@@ -3,7 +3,7 @@ services:
   httpd:
     build: apache
     links:
-    - "sosol"
+    - "tomcat-sosol"
     - "xsugar"
     - "fuseki"
     - "solr"
@@ -19,7 +19,10 @@ services:
     - repo:/srv
     links:
     - "xsugar"
+    - "mysql"
     depends_on:
+      mysql:
+        condition: service_started
       repo_clone:
         condition: service_healthy
       xsugar:
@@ -73,11 +76,20 @@ services:
     image: mysql
     environment:
     - MYSQL_RANDOM_ROOT_PASSWORD=yes
-    - MYSQL_DATABASE=pn
     - MYSQL_USER=pn
     - MYSQL_PASSWORD=p4pyr!
     volumes:
     - ./mysql:/docker-entrypoint-initdb.d
+  tomcat-sosol:
+    build: tomcat-sosol
+    links:
+    - "mysql"
+    - "xsugar"
+    volumes:
+    - repo:/srv
+    depends_on:
+      sosol:
+        condition: service_healthy
   solr:
     build: tomcat-solr
     links:
