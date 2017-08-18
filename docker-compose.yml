@@ -68,12 +68,12 @@ services:
     - repo:/srv
     environment:
     - OPTS=--loc=/data --update --port=8090 /pi
-    - JVM_ARGS=-Xmx4096M
+    - JVM_ARGS=-Xmx8192M
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
     # ports:
     # - "8090:8090"
   mysql:
-    image: mysql
+    image: mysql:5.6
     environment:
     - MYSQL_RANDOM_ROOT_PASSWORD=yes
     - MYSQL_USER=pn
@@ -95,8 +95,8 @@ services:
     links:
     - "mysql"
     - "fuseki"
-    ports:
-    - "8080:8080"
+    # ports:
+    # - "8080:8080"
     volumes:
     - repo:/srv
     depends_on:
