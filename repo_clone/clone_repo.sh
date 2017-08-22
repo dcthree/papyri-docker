@@ -9,3 +9,5 @@ if [ ! -d "$REPO_PATH" ]; then
 else
   touch "$LOCK_PATH"
 fi
+
+sleep infinity
