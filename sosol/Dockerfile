@@ -62,5 +62,5 @@ RUN bundle exec rake db:migrate && bundle exec rake git:db:canonical:clone
 # EXPOSE 3000
 # CMD bundle exec rails server
 
-HEALTHCHECK --retries=9999 CMD /root/warble-done.sh
+HEALTHCHECK --retries=9999 CMD /root/sosol/warble-done.sh
 CMD /root/sosol/migrate-and-copy.sh
