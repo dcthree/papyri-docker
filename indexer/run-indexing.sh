@@ -12,5 +12,6 @@ fi
 if [ ! -e "/srv/data/papyri.info/indexing_done" ]; then
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-indexer/src/info/papyri/indexer.clj
   sed -i -e 's/localhost:8083/solr:8080/' /srv/data/papyri.info/git/navigator/pn-indexer/src/info/papyri/indexer.clj
+  sed -i -e 's/Xmx1G/Xmx8G/' /srv/data/papyri.info/git/navigator/pn-indexer/project.clj
   cd /srv/data/papyri.info/git/navigator/pn-indexer && /root/wait-for-it.sh -t 9999 solr:8080 -- lein run && touch /srv/data/papyri.info/indexing_done
 fi
