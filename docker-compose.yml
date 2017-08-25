@@ -11,6 +11,8 @@ services:
     - repo:/srv
     ports:
     - "8000:80"
+    depends_on:
+    - indexer
   sosol:
     build: sosol
     # ports:
@@ -56,12 +58,18 @@ services:
         condition: service_healthy
       fuseki:
         condition: service_started
+      solr:
+        condition: service_started
     volumes:
     - repo:/srv
     - maven:/root/.m2
     links:
     - "fuseki"
     - "solr"
+    cap_add:
+    - SYS_PTRACE
+    security_opt:
+    - apparmor:unconfined
   fuseki:
     image: ryanfb/fuseki
     volumes:
