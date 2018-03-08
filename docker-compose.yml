@@ -12,7 +12,8 @@ services:
     ports:
     - "8000:80"
     depends_on:
-    - indexer
+      indexer:
+        condition: service_healthy
   sosol:
     build: sosol
     # ports:
@@ -74,6 +75,8 @@ services:
     image: ryanfb/fuseki
     volumes:
     - repo:/srv
+    mem_limit: 17179869184
+    cpu_count: 2
     environment:
     - OPTS=--loc=/data --update --port=8090 /pi
     - JVM_ARGS=-Xmx8192M

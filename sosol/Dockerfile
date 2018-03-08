@@ -46,11 +46,14 @@ RUN git clone https://github.com/rbenv/rbenv-vars.git $(rbenv root)/plugins/rben
 # ADD test_secret.rb /root/sosol/config/environments/test_secret.rb
 # ADD production_secret.rb /root/sosol/config/environments/production_secret.rb
 
-RUN git clone --branch v2.0-rc1 --single-branch https://github.com/DCLP/sosol.git /root/sosol
+# RUN git clone --branch v2.0-rc1 --single-branch https://github.com/DCLP/sosol.git /root/sosol
+RUN git clone --branch master --single-branch https://github.com/DCLP/sosol.git /root/sosol
 WORKDIR /root/sosol
-RUN git checkout v2.0-rc1
+# RUN git checkout v2.0-rc1
+RUN git checkout master
 ADD . /root/sosol/
-RUN git clone --bare --branch v1.0-rc1 --single-branch --depth 50 https://github.com/DCLP/idp.data.git db/git/canonical.git
+# RUN git clone --bare --branch v1.0-rc1 --single-branch --depth 50 https://github.com/DCLP/idp.data.git db/git/canonical.git
+RUN git clone --bare --branch master --single-branch --depth 50 https://github.com/DCLP/idp.data.git db/git/canonical.git
 # Configure MySQL
 RUN java -version
 RUN rbenv install && rbenv rehash && gem install bundler && rbenv rehash && bundle install && jruby -v

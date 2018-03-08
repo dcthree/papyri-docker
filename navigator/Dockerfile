@@ -13,7 +13,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LEIN_ROOT true
 
-RUN git clone --branch v2.0-rc1 --single-branch https://github.com/DCLP/navigator.git /navigator
+RUN git clone --branch master --single-branch https://github.com/DCLP/navigator.git /navigator
 
 ADD https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein /usr/local/bin/lein
 RUN chmod a+x /usr/local/bin/lein
