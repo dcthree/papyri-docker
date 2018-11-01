@@ -12,14 +12,18 @@ sed -i -e '/^DocumentRoot /d' /usr/local/apache2/conf/httpd.conf
 # echo "LoadModule headers_module modules/mod_headers.so" >> /usr/local/apache2/conf/httpd.conf
 # echo "LoadModule alias_module modules/mod_alias.so" >> /usr/local/apache2/conf/httpd.conf
 
-cat /srv/data/papyri.info/git/navigator/pn-config/pi.conf >> /usr/local/apache2/conf/httpd.conf
-sed -i -e 's/localhost:8090/fuseki:8090/g' /usr/local/apache2/conf/httpd.conf
-sed -i -e 's/localhost:8083/solr:8080/g' /usr/local/apache2/conf/httpd.conf
-# sed -i -e 's/localhost:8082/sosol:3000/g' /usr/local/apache2/conf/httpd.conf
-sed -i -e 's/localhost:8082/tomcat-sosol:8080/g' /usr/local/apache2/conf/httpd.conf
-sed -i -e 's/localhost:9999/xsugar:9999/g' /usr/local/apache2/conf/httpd.conf
-sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
-sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf
+if [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
+  echo "Updating httpd.conf..."
+  cat /srv/data/papyri.info/git/navigator/pn-config/pi.conf >> /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:8090/fuseki:8090/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:8083/solr:8080/g' /usr/local/apache2/conf/httpd.conf
+  # sed -i -e 's/localhost:8082/sosol:3000/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:8082/tomcat-sosol:8080/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:9999/xsugar:9999/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
+  sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf
+  touch /usr/local/apache2/conf/httpd.conf.lock
+fi
 
 # needs pn-sync run once
 # sed -i -e '/^RewriteRule...index.html.*/d' /usr/local/apache2/conf/httpd.conf
