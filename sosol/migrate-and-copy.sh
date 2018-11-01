@@ -7,6 +7,8 @@ if [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
   cp -R /root/sosol /srv/data/papyri.info/sosol/editor
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
   cd /srv/data/papyri.info/sosol/editor && bundle exec warble war && touch editor.war.lock
+else
+  cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
 fi
 
 sleep infinity
