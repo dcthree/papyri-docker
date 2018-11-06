@@ -77,14 +77,15 @@ services:
     image: ryanfb/fuseki
     volumes:
     - repo:/srv
+    - fuseki_data:/data
     mem_limit: 17179869184
     cpu_count: 2
     environment:
     - OPTS=--loc=/data --update --port=8090 /pi
     - JVM_ARGS=-Xmx8192M
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-    # ports:
-    # - "8090:8090"
+    ports:
+    - "8090:8090"
   mysql:
     image: mysql:5.6
     environment:
@@ -93,6 +94,7 @@ services:
     - MYSQL_PASSWORD=p4pyr!
     volumes:
     - ./mysql:/docker-entrypoint-initdb.d
+    - mysql_data:/var/lib/mysql
   tomcat-sosol:
     build: tomcat-sosol
     links:
@@ -118,3 +120,5 @@ services:
 volumes:
   repo:
   maven:
+  mysql_data:
+  fuseki_data:
