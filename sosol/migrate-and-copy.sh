@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
+if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
+  rm -fv /srv/data/papyri.info/sosol/editor/editor.war.lock
   ./wait-for-it.sh -t 9999 mysql:3306
   rm -rf /srv/data/papyri.info/sosol/editor
   mkdir -p /srv/data/papyri.info/sosol

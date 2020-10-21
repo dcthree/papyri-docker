@@ -78,7 +78,7 @@ services:
     volumes:
     - repo:/srv
     - fuseki_data:/data
-    mem_limit: 17179869184
+    mem_limit: '17179869184'
     cpu_count: 2
     environment:
     - OPTS=--loc=/data --update --port=8090 /pi

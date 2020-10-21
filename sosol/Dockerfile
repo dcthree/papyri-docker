@@ -3,20 +3,26 @@ MAINTAINER Ryan Baumann <ryan.baumann@gmail.com>
 
 # Install the Ubuntu packages.
 # The Duke mirror is just added here as backup for occasional main flakiness.
-RUN echo deb http://archive.linux.duke.edu/ubuntu/ trusty main >> /etc/apt/sources.list 
-RUN echo deb-src http://archive.linux.duke.edu/ubuntu/ trusty main >> /etc/apt/sources.list
+# RUN echo deb http://archive.linux.duke.edu/ubuntu/ trusty main >> /etc/apt/sources.list 
+# RUN echo deb-src http://archive.linux.duke.edu/ubuntu/ trusty main >> /etc/apt/sources.list
+
 # Install Ruby, RubyGems, Bundler, MySQL, Git, wget, svn, java
 # openjdk-7-jre
 # Install ruby-build build deps
 # Install oraclejdk8
+# debian.opennms.org repo
+# replaced add-apt-repository -y ppa:webupd8team/java && \
+# after software-properties install below
+# for oracle-java8-installer package
 RUN which debconf-set-selections
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-  apt-get install -y software-properties-common python-software-properties && \
-  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get install -y apt-transport-https ca-certificates software-properties-common python-software-properties wget && \
+  echo deb https://debian.opennms.org/ stable main >> /etc/apt/sources.list && \
+  wget -O - http://debian.opennms.org/OPENNMS-GPG-KEY | apt-key add - && \
   apt-get update && \
-  apt-get install -y mysql-server git wget subversion \
+  apt-get install -y mysql-server git subversion \
   autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev \
   oracle-java8-installer oracle-java8-set-default
 
@@ -47,16 +53,17 @@ RUN git clone https://github.com/rbenv/rbenv-vars.git $(rbenv root)/plugins/rben
 # ADD production_secret.rb /root/sosol/config/environments/production_secret.rb
 
 # RUN git clone --branch v2.0-rc1 --single-branch https://github.com/DCLP/sosol.git /root/sosol
-RUN git clone --branch master --single-branch https://github.com/DCLP/sosol.git /root/sosol
+# RUN git clone --branch master --single-branch https://github.com/DCLP/sosol.git /root/sosol
+RUN git clone --branch dclp_reintegration --single-branch https://github.com/ryanfb/sosol.git /root/sosol && cd /root/sosol && git checkout 7ee20a4c4ca4261b2d7b9b62fc3f83562f5c5e67
 WORKDIR /root/sosol
 # RUN git checkout v2.0-rc1
-RUN git checkout master
+# RUN git checkout dclp_reintegration
 ADD . /root/sosol/
 # RUN git clone --bare --branch v1.0-rc1 --single-branch --depth 50 https://github.com/DCLP/idp.data.git db/git/canonical.git
 RUN git clone --bare --branch master --single-branch --depth 50 https://github.com/DCLP/idp.data.git db/git/canonical.git
 # Configure MySQL
 RUN java -version
-RUN rbenv install && rbenv rehash && gem install bundler && rbenv rehash && bundle install && jruby -v
+RUN rbenv install && rbenv rehash && gem install bundler --version '<2.0' && rbenv rehash && bundle install && jruby -v
 RUN RAILS_ENV=test ./script/setup
 RUN bundle exec rake db:migrate && bundle exec rake git:db:canonical:clone
 # RUN bundle exec warble war
