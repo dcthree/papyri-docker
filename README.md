@@ -26,7 +26,7 @@ From this repository's directory:
     * `navigator`: the main ["Papyrological Navigator"](https://github.com/papyri/navigator) server
     * `fuseki`: Apache Jena Fuseki 1.x SPARQL Server (aka "Numbers Server")
     * `solr`: Tomcat server running Apache Solr for search
-  * `tomcat-sosol`: Tomcat server serving up WAR file for [Editor](http://github.com/sosol/sosol), WAR built by `sosol`
+  * `tomcat-sosol`: Tomcat server serving up WAR file for [Editor (aka "SoSOL")](http://github.com/sosol/sosol), WAR built by `sosol`
     * `sosol`: container that runs Editor tests and builds the WAR file for `tomcat-sosol`
     * `xsugar`: container that runs [XSugar](https://github.com/papyri/xsugar), an XML transformer used by `tomcat-sosol`
   * `mysql`: MySQL 5.6 server, shared by `sosol`, `tomcat-sosol`, and `solr`
