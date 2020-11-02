@@ -36,8 +36,12 @@ The papyri.info "Top Level Data Flow" diagram may help with understanding:
 
 ![Top Level Data Flow diagram for papyri.info](http://papyri.github.io/documentation/system_level/images/TopLevelDataFlow-new.jpg)
 
+## Service Startup Order
+
 Service startup order is important, and the current `docker-compose.yml` uses several strategies to control it:
 
-* `links` and `depends_on` clauses in `docker-compose` 2.2 syntax
-* [`wait-for-it.sh`](https://github.com/vishnubob/wait-for-it) used to wait for network service availability; `indexer` uses it to wait for `solr` startup, `sosol` uses it to wait for `mysql` startup
-* lockfiles on shared volumes are used to enforce processes that only need to run once only running once; these lockfiles are also sometimes used to define a `HEALTHCHECK` for the corresponding process that busy-waits until the lockfile exists so that a process which depends on the run-once process won't execute until it enters a "healthy" state (used by `repo_clone`, `indexer`, `navigator`, `sosol`)
+1. [`wait-for-it.sh`](https://github.com/vishnubob/wait-for-it) used to wait for network service availability; `indexer` uses it to wait for `solr` startup, `sosol` uses it to wait for `mysql` startup
+2. `links` and `depends_on` clauses in `docker-compose` 2.2 syntax
+3. lockfiles on shared volumes are used to enforce processes that only need to run once only running once; these lockfiles are also sometimes used to define a `HEALTHCHECK` for the corresponding process that busy-waits until the lockfile exists so that a process which depends on the run-once process won't execute until it enters a "healthy" state (used by `repo_clone`, `indexer`, `navigator`, `sosol`)
+
+Note that these latter two strategies will only really *enforce* ordering with `docker-compose` v2 syntax, so in order to move to v3 we would need to consolidate them to use the first strategy of an explicit wait script, instead of using `HEALTHCHECK` or depending on `links`/`depends_on` to enforce startup order.
