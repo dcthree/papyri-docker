@@ -6,7 +6,7 @@ LOCK_PATH="${BASE_PATH}/canonical_cloned.lock"
 
 if [ ! -d "$REPO_PATH" ]; then
   echo "Cloning repo..."
-  git clone --bare https://github.com/DCLP/idp.data.git $REPO_PATH && git clone --branch master --single-branch $REPO_PATH /srv/data/papyri.info/idp.data && touch "$LOCK_PATH"
+  git clone --bare https://github.com/papyri/idp.data.git $REPO_PATH && git clone --branch master --single-branch $REPO_PATH /srv/data/papyri.info/idp.data && touch "$LOCK_PATH"
 elif [ ! -d "/srv/data/papyri.info/idp.data" ]; then
   echo "Working copy doesn't exist, cloning..."
   git clone --branch master --single-branch $REPO_PATH /srv/data/papyri.info/idp.data && touch "$LOCK_PATH"
