@@ -110,8 +110,8 @@ services:
     links:
     - "mysql"
     - "fuseki"
-    # ports:
-    # - "8080:8080"
+    ports:
+    - "8080:8080"
     volumes:
     - repo:/srv
     depends_on:
