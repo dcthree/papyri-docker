@@ -25,12 +25,13 @@ From this repository's directory:
   * `indexer`: container that runs the indexing process using the below services
     * `navigator`: the main ["Papyrological Navigator"](https://github.com/papyri/navigator) server
     * `fuseki`: Apache Jena Fuseki 1.x SPARQL Server (aka "Numbers Server")
+    * `tomcat-pn`: Tomcat server runing "dispatch" and "sync" servlets
     * `solr`: Tomcat server running Apache Solr for search
   * `tomcat-sosol`: Tomcat server serving up WAR file for [Editor (aka "SoSOL")](http://github.com/sosol/sosol), WAR built by `sosol`
     * `sosol`: container that runs Editor tests and builds the WAR file for `tomcat-sosol`
     * `xsugar`: container that runs [XSugar](https://github.com/papyri/xsugar), an XML transformer used by `tomcat-sosol`
-  * `mysql`: MySQL 5.6 server, shared by `sosol`, `tomcat-sosol`, and `solr`
-  * `repo_clone`: shared Git checkout of the large main [`idp.data`](https://github.com/papyri/idp.data) repository, shared by `navigator`, `fuseki`, `solr`, `tomcat-sosol`, `sosol`, & `httpd`
+  * `mysql`: MySQL 5.6 server, shared by `sosol`, `tomcat-sosol`, and `tomcat-pn`
+  * `repo_clone`: shared Git checkout of the large main [`idp.data`](https://github.com/papyri/idp.data) repository, shared by `navigator`, `fuseki`, `tomcat-pn`, `tomcat-sosol`, `sosol`, & `httpd`
 
 The papyri.info "Top Level Data Flow" diagram may help with understanding:
 
