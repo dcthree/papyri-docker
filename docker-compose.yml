@@ -52,6 +52,7 @@ services:
     volumes:
     - repo:/srv
     - maven:/root/.m2
+    - solr_data:/solr
     links:
     - "fuseki"
   indexer:
@@ -106,7 +107,16 @@ services:
       sosol:
         condition: service_healthy
   solr:
-    build: tomcat-solr
+    image: solr:7
+    ports:
+    - "8983:8983"
+    volumes:
+    - solr_data:/var/solr
+    depends_on:
+      navigator:
+        condition: service_healthy
+  tomcat-pn:
+    build: tomcat-pn
     links:
     - "mysql"
     - "fuseki"
@@ -122,3 +132,4 @@ volumes:
   maven:
   mysql_data:
   fuseki_data:
+  solr_data:

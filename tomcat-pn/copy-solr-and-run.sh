@@ -3,7 +3,6 @@
 if [ -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
   cp -v /srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war /usr/local/tomcat/webapps/dispatch.war
   cp -v /srv/data/papyri.info/git/navigator/pn-sync/target/sync.war /usr/local/tomcat/webapps/sync.war
-  cp -v /root/solr.war /usr/local/tomcat/webapps/solr.war
   cp -v /root/tomcat-users.xml /usr/local/tomcat/conf/
   if [ ! -e "/usr/local/tomcat/conf/server.xml.lock" ]; then
     sed -i -e 's/Connector port="8080"/Connector port="8080" URIEncoding="UTF-8"/' /usr/local/tomcat/conf/server.xml && touch /usr/local/tomcat/conf/server.xml.lock
