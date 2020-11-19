@@ -112,7 +112,7 @@ services:
     ports:
     - "8983:8983"
     volumes:
-    - solr_data:/var/solr
+    - solr_data:/opt/solr/server/solr
     depends_on:
       navigator:
         condition: service_healthy
