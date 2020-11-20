@@ -113,6 +113,8 @@ services:
     - "8983:8983"
     volumes:
     - solr_data:/opt/solr/server/solr
+    environment:
+    - SOLR_JAVA_MEM=-Xms1G -Xmx8G
     depends_on:
       navigator:
         condition: service_healthy
