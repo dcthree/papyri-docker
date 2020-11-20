@@ -13,7 +13,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV LEIN_ROOT true
 
-RUN git clone --branch master --single-branch https://github.com/papyri/navigator.git /navigator
+RUN git clone --branch master --single-branch https://github.com/papyri/navigator.git /navigator && cd /navigator && git checkout 4971ce3
 
 ADD https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein /usr/local/bin/lein
 RUN chmod a+x /usr/local/bin/lein
