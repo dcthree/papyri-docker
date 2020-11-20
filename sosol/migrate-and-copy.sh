@@ -13,4 +13,5 @@ else
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
 fi
 
+echo "sleep infinity"
 sleep infinity
