@@ -83,7 +83,7 @@ services:
     mem_limit: '17179869184'
     cpu_count: 2
     environment:
-    - OPTS=--loc=/data --update --port=8090 /pi
+    - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
     - JVM_ARGS=-Xmx8192M
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
     ports:
