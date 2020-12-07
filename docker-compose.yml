@@ -30,7 +30,7 @@ services:
       mysql:
         condition: service_started
       repo_clone:
-        condition: service_healthy
+        condition: service_started
       xsugar:
         condition: service_healthy
   repo_clone:
@@ -47,7 +47,7 @@ services:
     build: navigator
     depends_on:
       repo_clone:
-        condition: service_healthy
+        condition: service_started
       fuseki:
         condition: service_started
     volumes:

@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ ! -e /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock ]; then
+  mkdir -p /srv/data/papyri.info/lockfiles/repo_clone
+  inotifywait -e create /srv/data/papyri.info/lockfiles/repo_clone
+else
+  echo "Repo already cloned!"
+fi
+
 if [ ! -d "/srv/data/papyri.info/git/navigator" ]; then
   mkdir -p /srv/data/papyri.info/git && cp -R /navigator /srv/data/papyri.info/git/navigator/
 fi

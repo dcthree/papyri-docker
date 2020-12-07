@@ -13,5 +13,4 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 ADD . /root/
-HEALTHCHECK --retries=9999 CMD /root/check_repo.sh
 CMD /root/clone_repo.sh
