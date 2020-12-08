@@ -3,6 +3,7 @@
 until [ -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; do
   sleep 1
 done
+echo "editor.war.lock detected"
 
 cp -v /srv/data/papyri.info/sosol/editor/editor.war /usr/local/tomcat/webapps/editor.war
 sed -i -e 's/Connector port="8080" protocol=/Connector port="8080" URIEncoding="UTF-8" protocol=/' /usr/local/tomcat/conf/server.xml
