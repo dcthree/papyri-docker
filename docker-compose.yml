@@ -106,7 +106,7 @@ services:
     - repo:/srv
     depends_on:
       sosol:
-        condition: service_healthy
+        condition: service_started
   solr:
     image: solr:7
     ports:
