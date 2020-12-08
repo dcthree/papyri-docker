@@ -3,10 +3,11 @@
 LOCK_PATH="/srv/data/papyri.info/lockfiles/indexer"
 LOCK_FILE="${LOCK_PATH}/indexing_done.lock"
 
+echo "waiting for ${LOCK_FILE}"
 until [ -e "/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock" ]; do
   sleep 1
 done
-echo "navigator mapping_done lock detected"
+echo "${LOCK_FILE} detected"
 
 if [ ! -d "/srv/data/papyri.info/git/navigator" ]; then
   echo "/srv/data/papyri.info/git/navigator not found! This directory should be copied in by the navigator docker container"

@@ -1,9 +1,11 @@
 #!/bin/bash
 
-until [ -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; do
+LOCK_FILE="/srv/data/papyri.info/sosol/editor/editor.war.lock"
+echo "waiting for ${LOCK_FILE}"
+until [ -e "${LOCK_FILE}" ]; do
   sleep 1
 done
-echo "editor.war.lock detected"
+echo "${LOCK_FILE} detected"
 
 cp -v /srv/data/papyri.info/sosol/editor/editor.war /usr/local/tomcat/webapps/editor.war
 sed -i -e 's/Connector port="8080" protocol=/Connector port="8080" URIEncoding="UTF-8" protocol=/' /usr/local/tomcat/conf/server.xml

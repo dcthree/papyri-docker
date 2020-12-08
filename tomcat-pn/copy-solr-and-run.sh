@@ -1,9 +1,11 @@
 #!/bin/bash
 
-until [ -e "/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock" ]; do
+LOCK_FILE="/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock"
+echo "waiting for ${LOCK_FILE}"
+until [ -e "${LOCK_FILE}" ]; do
   sleep 1
 done
-echo "navigator mapping_done lock detected"
+echo "${LOCK_FILE} detected"
 
 if [ -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
   cp -v /srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war /usr/local/tomcat/webapps/dispatch.war
