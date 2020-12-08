@@ -6,6 +6,6 @@ digraph D {
   indexer -> {navigator, fuseki, solr}
   navigator -> {repo_clone, fuseki}
   sosol -> {mysql, repo_clone, xsugar}
-  httpd -> {indexer, tomcat_sosol} 
+  httpd -> {indexer, tomcat_sosol, tomcat_pn, fuseki, solr, xsugar}
 
 }

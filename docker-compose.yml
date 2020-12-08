@@ -13,6 +13,14 @@ services:
     ports:
     - "8000:80"
     depends_on:
+      xsugar:
+        condition: service_started
+      tomcat-pn:
+        condition: service_started
+      solr:
+        condition: service_started
+      fuseki:
+        condition: service_started
       indexer:
         condition: service_started
       tomcat-sosol:
