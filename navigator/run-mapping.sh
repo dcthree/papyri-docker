@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOCKFILE="/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock"
+LOCK_PATH="/srv/data/papyri.info/lockfiles/navigator"
+LOCK_FILE="${LOCK_PATH}/mapping_done.lock"
 
 if [ ! -e /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock ]; then
   mkdir -p /srv/data/papyri.info/lockfiles/repo_clone
@@ -51,10 +52,11 @@ if [ ! -e "/srv/data/papyri.info/pn/docs" ]; then
   git clone https://github.com/dclp/site-docs.git /srv/data/papyri.info/pn/docs
 fi
 
-if [ ! -e "$LOCKFILE" ]; then
+if [ ! -e "$LOCK_FILE" ]; then
+  mkdir -p $LOCK_PATH
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-mapping/src/info/papyri/map.clj
-  cd /srv/data/papyri.info/git/navigator/pn-mapping && lein run map-all && touch $LOCKFILE
+  cd /srv/data/papyri.info/git/navigator/pn-mapping && lein run map-all && touch $LOCK_FILE
   echo "mapping done"
 else
-  echo "$LOCKFILE already exists, skipping mapping"
+  echo "$LOCK_FILE already exists, skipping mapping"
 fi

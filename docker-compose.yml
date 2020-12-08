@@ -14,7 +14,7 @@ services:
     - "8000:80"
     depends_on:
       indexer:
-        condition: service_healthy
+        condition: service_started
       tomcat-sosol:
         condition: service_started
   sosol:

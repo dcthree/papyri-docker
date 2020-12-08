@@ -18,5 +18,4 @@ RUN git clone --branch master --single-branch https://github.com/papyri/Styleshe
 ADD https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein /usr/local/bin/lein
 RUN chmod a+x /usr/local/bin/lein
 ADD . /root
-HEALTHCHECK --retries=9999999 CMD /root/check_indexing.sh
 CMD /root/run-indexing.sh
