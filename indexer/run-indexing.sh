@@ -1,5 +1,10 @@
 #!/bin/bash
 
+until [ -e "/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock" ]; do
+  sleep 1
+end
+echo "navigator mapping_done lock detected"
+
 if [ ! -d "/srv/data/papyri.info/git/navigator" ]; then
   echo "/srv/data/papyri.info/git/navigator not found! This directory should be copied in by the navigator docker container"
   exit 1
