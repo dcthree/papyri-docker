@@ -2,7 +2,7 @@
 
 until [ -e "/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock" ]; do
   sleep 1
-end
+done
 echo "navigator mapping_done lock detected"
 
 if [ -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
