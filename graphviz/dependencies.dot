@@ -1,0 +1,9 @@
+digraph D {
+
+  repo_clone -> {navigator, fuseki, tomcat_pn, tomcat_sosol, sosol, httpd}
+  {fuseki, navigator, tomcat_pn, solr} -> indexer
+  {tomcat_pn, tomcat_sosol, fuseki, solr} -> httpd
+  mysql -> {sosol, tomcat_sosol, tomcat_pn}
+  {xsugar, sosol} -> tomcat_sosol
+
+}

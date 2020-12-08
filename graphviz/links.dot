@@ -1,0 +1,8 @@
+digraph D {
+  httpd -> {tomcat_sosol, tomcat_pn, xsugar, fuseki, solr}
+  sosol -> {xsugar, mysql}
+  navigator -> fuseki
+  indexer -> {fuseki, solr}
+  tomcat_sosol -> {mysql, xsugar}
+  tomcat_pn -> {mysql, fuseki}
+}

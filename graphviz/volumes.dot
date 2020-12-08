@@ -1,0 +1,13 @@
+digraph D {
+  httpd -> repo
+  sosol -> repo
+  repo_clone -> repo
+  xsugar -> maven
+  navigator -> {repo, maven, solr_data}
+  indexer -> {repo, maven}
+  fuseki -> {repo, fuseki_data}
+  mysql -> mysql_data
+  tomcat_sosol -> repo
+  solr -> solr_data
+  tomcat_pn -> repo
+}

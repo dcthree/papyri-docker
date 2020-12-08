@@ -1,0 +1,11 @@
+digraph D {
+
+  tomcat_pn -> navigator
+  solr -> navigator
+  tomcat_sosol -> sosol
+  indexer -> {navigator, fuseki, solr}
+  navigator -> {repo_clone, fuseki}
+  sosol -> {mysql, repo_clone, xsugar}
+  httpd -> {indexer, tomcat_sosol} 
+
+}
