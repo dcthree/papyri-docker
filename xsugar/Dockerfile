@@ -18,5 +18,4 @@ RUN git clone --branch rails-3-nfd --single-branch https://github.com/papyri/xsu
 WORKDIR /xsugar/src/standalone
 RUN mvn compile war:war
 EXPOSE 9999
-HEALTHCHECK --retries=9999 CMD curl -f http://localhost:9999/ || exit 1
 CMD mvn jetty:run

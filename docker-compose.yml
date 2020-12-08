@@ -32,7 +32,7 @@ services:
       repo_clone:
         condition: service_started
       xsugar:
-        condition: service_healthy
+        condition: service_started
   repo_clone:
     build: repo_clone
     volumes:
