@@ -19,6 +19,7 @@ if [ ! -e "/solr/solr.xml" ]; then
   cp -R -v /navigator/pn-solr/. /solr/
   find /solr/ -type d -exec chmod a+x {} \;
   chmod -Rv a+rw /solr/
+  touch /solr/solr.xml.lock
 fi
 
 # pn-config
