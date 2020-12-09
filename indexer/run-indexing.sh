@@ -20,7 +20,7 @@ if [ ! -d "/srv/data/papyri.info/git/navigator/epidoc-xslt" ]; then
   echo "Copying epidoc-xslt"
   mkdir -p /srv/data/papyri.info/git/navigator && cp -Rv /epidoc-xslt /srv/data/papyri.info/git/navigator/epidoc-xslt
 else
-  echo "/srv/data/papyri.info/git/navigator/epidoc-xslt already exists"
+  echo "/srv/data/papyri.info/git/navigator/epidoc-xslt already exists, not copying"
 fi
 
 if [ ! -e "${LOCK_FILE}" ]; then
