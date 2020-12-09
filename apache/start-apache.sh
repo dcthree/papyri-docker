@@ -5,6 +5,13 @@
 /root/wait-for-it.sh -t 9999 tomcat-pn:8080
 /root/wait-for-it.sh -t 9999 tomcat-sosol:8080
 
+WAIT_FILE="/srv/data/papyri.info/git/navigator/pn-config/pi.conf"
+echo "waiting for ${WAIT_FILE}"
+until [ -e "$WAIT_FILE" ]; do
+  sleep 1
+done
+echo "${WAIT_FILE} detected"
+
 sed -i -e '/^ *AllowOverride None/d' /usr/local/apache2/conf/httpd.conf
 sed -i -e '/^ *Order .*/d' /usr/local/apache2/conf/httpd.conf
 sed -i -e '/^ *Deny .*/d' /usr/local/apache2/conf/httpd.conf
