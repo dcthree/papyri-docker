@@ -1,5 +1,10 @@
 #!/bin/bash
 
+/root/wait-for-it.sh -t 9999 xsugar:9999
+/root/wait-for-it.sh -t 9999 fuseki:8090
+/root/wait-for-it.sh -t 9999 tomcat-pn:8080
+/root/wait-for-it.sh -t 9999 tomcat-sosol:8080
+
 sed -i -e '/^ *AllowOverride None/d' /usr/local/apache2/conf/httpd.conf
 sed -i -e '/^ *Order .*/d' /usr/local/apache2/conf/httpd.conf
 sed -i -e '/^ *Deny .*/d' /usr/local/apache2/conf/httpd.conf
@@ -35,10 +40,11 @@ fi
 # sed -i -e '/^RewriteLog/d' /usr/local/apache2/conf/httpd.conf
 mkdir -p /var/log/httpd && chmod a+w /var/log/httpd
 # if [ ! -e /srv/data/papyri.info/pn/home ]; then
-rm -rf /srv/data/papyri.info/pn/home
+rm -rfv /srv/data/papyri.info/pn/home
 mkdir -p /srv/data/papyri.info/pn
-cp -r /srv/data/papyri.info/git/navigator/pn-site /srv/data/papyri.info/pn/home
+cp -rv /srv/data/papyri.info/git/navigator/pn-site /srv/data/papyri.info/pn/home
 # fi
 chmod -R a+r /srv/data
 cat /usr/local/apache2/conf/httpd.conf
+
 httpd-foreground
