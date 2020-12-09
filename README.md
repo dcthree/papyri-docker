@@ -46,3 +46,22 @@ Service startup order is important, and the current `docker-compose.yml` uses se
 3. `links` and `depends_on` clauses in `docker-compose` 2.2 syntax
 
 Note that this last strategy will only really *enforce* ordering with `docker-compose` v2 syntax.
+
+## Servers vs. Processes
+
+You may note that we have some containers which run as continuous *servers*, and others which are containerized *processes* for building artifacts needed by those servers. Categorizing them may be useful:
+
+**Servers:**
+* `http`
+* `fuseki`
+* `solr`
+* `tomcat-sosol`
+* `tomcat-pn`
+* `mysql`
+* `xsugar`
+
+**Processes:**
+* `repo_clone`
+* `sosol`
+* `navigator`
+* `indexer`
