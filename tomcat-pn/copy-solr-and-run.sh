@@ -1,11 +1,11 @@
 #!/bin/bash
 
-LOCK_FILE="/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock"
-echo "waiting for ${LOCK_FILE}"
-until [ -e "${LOCK_FILE}" ]; do
+WAIT_LOCK="/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock"
+echo "waiting for ${WAIT_LOCK}"
+until [ -e "${WAIT_LOCK}" ]; do
   sleep 1
 done
-echo "${LOCK_FILE} detected"
+echo "${WAIT_LOCK} detected"
 
 if [ -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
   cp -v /srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war /usr/local/tomcat/webapps/dispatch.war
@@ -17,5 +17,6 @@ if [ -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" 
   JAVA_OPTS="-server -Xms1500m -Xmx8G -Xmn450m -XX:MaxPermSize=256m -verbose:gc -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintHeapAtGC -XX:+UseConcMarkSweepGC -Dsolr.solr.home=/srv/data/papyri.info/solr" catalina.sh run
   exit 0
 else
+  echo "dispatch.war missing"
   exit 1
 fi

@@ -1,11 +1,12 @@
 #!/bin/bash
 
-if [ ! -e /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock ]; then
-  mkdir -p /srv/data/papyri.info/lockfiles/repo_clone
-  inotifywait -e create /srv/data/papyri.info/lockfiles/repo_clone
-else
-  echo "Repo already cloned!"
-fi
+WAIT_LOCK="/srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock"
+echo "waiting for ${WAIT_LOCK}"
+until [ -e "${WAIT_LOCK}" ]; do
+  sleep 1
+done
+echo "${WAIT_LOCK} detected"
+
 if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
   rm -fv /srv/data/papyri.info/sosol/editor/editor.war.lock
   ./wait-for-it.sh -t 9999 mysql:3306

@@ -6,7 +6,7 @@ LOCK_PATH="/srv/data/papyri.info/lockfiles/repo_clone"
 LOCK_FILE="${LOCK_PATH}/canonical_cloned.lock"
 
 mkdir -p "$LOCK_PATH"
-if [ ! -d "$REPO_PATH" ]; then
+if [ ! -d "$REPO_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "Cloning repo..."
   git clone --bare https://github.com/papyri/idp.data.git $REPO_PATH && git clone --branch master --single-branch $REPO_PATH /srv/data/papyri.info/idp.data && touch "$LOCK_FILE"
   echo "repo clone done"
