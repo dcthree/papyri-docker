@@ -23,6 +23,8 @@ if [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
   sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
   sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf
   touch /usr/local/apache2/conf/httpd.conf.lock
+else
+  echo "httpd.conf already updated, skipping updates"
 fi
 
 # needs pn-sync run once
