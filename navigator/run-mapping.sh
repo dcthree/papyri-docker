@@ -15,11 +15,14 @@ if [ ! -d "/srv/data/papyri.info/git/navigator" ]; then
   mkdir -p /srv/data/papyri.info/git && cp -R /navigator /srv/data/papyri.info/git/navigator/
 fi
 
-if [ ! -e "/solr/solr.xml" ]; then
+if [ ! -e "/solr/solr.xml.lock" ]; then
+  echo "Copying pn-solr..."
   cp -R -v /navigator/pn-solr/. /solr/
   find /solr/ -type d -exec chmod a+x {} \;
   chmod -Rv a+rw /solr/
   touch /solr/solr.xml.lock
+else
+  echo "solr.xml.lock already exists, skipping solr copy"
 fi
 
 # pn-config
