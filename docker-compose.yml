@@ -1,4 +1,4 @@
-version: "2.2"
+version: "3.8"
 services:
   httpd:
     build: apache
@@ -13,18 +13,12 @@ services:
     ports:
     - "8000:80"
     depends_on:
-      xsugar:
-        condition: service_started
-      tomcat-pn:
-        condition: service_started
-      solr:
-        condition: service_started
-      fuseki:
-        condition: service_started
-      indexer:
-        condition: service_started
-      tomcat-sosol:
-        condition: service_started
+    - xsugar
+    - tomcat-pn
+    - solr
+    - fuseki
+    - indexer
+    - tomcat-sosol
   sosol:
     build: sosol
     # ports:
@@ -35,12 +29,9 @@ services:
     - "xsugar"
     - "mysql"
     depends_on:
-      mysql:
-        condition: service_started
-      repo_clone:
-        condition: service_started
-      xsugar:
-        condition: service_started
+    - mysql
+    - repo_clone
+    - xsugar
   repo_clone:
     build: repo_clone
     volumes:
@@ -54,10 +45,8 @@ services:
   navigator:
     build: navigator
     depends_on:
-      repo_clone:
-        condition: service_started
-      fuseki:
-        condition: service_started
+    - repo_clone
+    - fuseki
     volumes:
     - repo:/srv
     - maven:/root/.m2
@@ -67,12 +56,9 @@ services:
   indexer:
     build: indexer
     depends_on:
-      navigator:
-        condition: service_started
-      fuseki:
-        condition: service_started
-      solr:
-        condition: service_started
+    - navigator
+    - fuseki
+    - solr
     volumes:
     - repo:/srv
     - maven:/root/.m2
@@ -88,7 +74,6 @@ services:
     volumes:
     - repo:/srv
     - fuseki_data:/data
-    mem_limit: '17179869184'
     cpu_count: 2
     environment:
     - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
@@ -113,8 +98,7 @@ services:
     volumes:
     - repo:/srv
     depends_on:
-      sosol:
-        condition: service_started
+    - sosol
   solr:
     build: solr
     ports:
@@ -124,8 +108,7 @@ services:
     environment:
     - SOLR_JAVA_MEM=-Xms1G -Xmx8G
     depends_on:
-      navigator:
-        condition: service_started
+    - navigator
   tomcat-pn:
     build: tomcat-pn
     links:
@@ -136,8 +119,7 @@ services:
     volumes:
     - repo:/srv
     depends_on:
-      navigator:
-        condition: service_started
+    - navigator
 volumes:
   repo:
   maven:
