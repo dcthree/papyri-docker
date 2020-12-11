@@ -7,8 +7,9 @@ until [ -e "${WAIT_LOCK}" ]; do
 done
 echo "${WAIT_LOCK} detected"
 
-if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
-  rm -fv /srv/data/papyri.info/sosol/editor/editor.war.lock
+if [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; then
+  echo "editor.war.lock missing, generating editor.war"
+  rm -fv /srv/data/papyri.info/sosol/editor/editor.war
   ./wait-for-it.sh -t 9999 mysql:3306
   rm -rf /srv/data/papyri.info/sosol/editor
   mkdir -p /srv/data/papyri.info/sosol
@@ -17,8 +18,8 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war" ]; then
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
   cd /srv/data/papyri.info/sosol/editor && bundle exec warble war && touch editor.war.lock
 else
-  cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
+  echo "editor.war.lock found, skipping generating editor.war"
 fi
 
-echo "sleep infinity"
-sleep infinity
+echo "done building editor.war"
+exit 0
