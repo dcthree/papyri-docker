@@ -20,7 +20,7 @@ services:
     - indexer
     - tomcat-sosol
   sosol:
-    build: sosol
+    build: sosol-compose
     # ports:
     # - "3000:3000"
     volumes:

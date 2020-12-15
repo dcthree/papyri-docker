@@ -1,0 +1,3 @@
+[submodule "sosol"]
+	path = sosol
+	url = https://github.com/sosol/sosol
