@@ -2,6 +2,10 @@
 
 Dockerized papyri.info stack.
 
+Clone with:
+
+    git clone --recurse-submodules https://github.com/dcthree/papyri-docker
+
 ## Running
 
 From this repository's directory:
