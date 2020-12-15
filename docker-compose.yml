@@ -20,11 +20,13 @@ services:
     - indexer
     - tomcat-sosol
   sosol:
-    build: sosol-compose
+    build: sosol
     # ports:
     # - "3000:3000"
     volumes:
     - repo:/srv
+    - ./sosol-compose:/opt/sosol-compose
+    command: /opt/sosol-compose/migrate-and-copy.sh
     links:
     - "xsugar"
     - "mysql"
