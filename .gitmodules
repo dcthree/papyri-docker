@@ -1,3 +1,6 @@
 [submodule "sosol"]
 	path = sosol
 	url = https://github.com/sosol/sosol
+[submodule "idp.data"]
+	path = idp.data
+	url = https://github.com/papyri/idp.data
