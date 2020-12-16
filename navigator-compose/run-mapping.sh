@@ -37,7 +37,6 @@ sed -i -e 's/localhost:8983/solr:8983/' /solr/pn-search/conf/xslt/example_rss.xs
 if [ ! -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
   echo "building dispatch.war"
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/java/info/papyri/dispatch/browse/CollectionBrowser.java
-  # cp /root/dispatch-web.xml /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
   sed -i -e 's/localhost:8983/solr:8983/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
   sed -i -e 's/localhost:8983/solr:8983/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/test/java/info/papyri/dispatch/browse/facet/StringSearchFacetIT.java
