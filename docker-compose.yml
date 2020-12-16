@@ -37,6 +37,7 @@ services:
   repo_clone:
     build: repo_clone
     volumes:
+    - ./:/docker-compose
     - repo:/srv
   xsugar:
     build: xsugar
