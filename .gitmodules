@@ -11,3 +11,6 @@
 	path = xsugar
 	url = https://github.com/papyri/xsugar.git
 	branch = rails-3-nfd
+[submodule "epidoc-xslt"]
+	path = epidoc-xslt
+	url = https://github.com/papyri/Stylesheets.git
