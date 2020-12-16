@@ -7,3 +7,7 @@
 [submodule "navigator"]
 	path = navigator
 	url = https://github.com/papyri/navigator.git
+[submodule "xsugar"]
+	path = xsugar
+	url = https://github.com/papyri/xsugar.git
+	branch = rails-3-nfd
