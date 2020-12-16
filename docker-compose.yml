@@ -39,7 +39,7 @@ services:
     volumes:
     - repo:/srv
   xsugar:
-    build: xsugar-compose
+    build: xsugar
     # ports:
     # - "9999:9999"
     volumes:
