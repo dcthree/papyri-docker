@@ -4,3 +4,6 @@
 [submodule "idp.data"]
 	path = idp.data
 	url = https://github.com/papyri/idp.data
+[submodule "navigator"]
+	path = navigator
+	url = https://github.com/papyri/navigator.git

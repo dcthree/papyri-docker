@@ -45,7 +45,7 @@ services:
     volumes:
     - maven:/root/.m2
   navigator:
-    build: navigator
+    build: navigator-compose
     depends_on:
     - repo_clone
     - fuseki
