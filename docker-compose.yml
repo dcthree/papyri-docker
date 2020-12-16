@@ -51,6 +51,7 @@ services:
     - repo_clone
     - fuseki
     volumes:
+    - ./navigator:/navigator
     - repo:/srv
     - maven:/root/.m2
     - solr_data:/solr
