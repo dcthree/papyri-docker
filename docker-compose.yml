@@ -64,6 +64,7 @@ services:
     - fuseki
     - solr
     volumes:
+    - ./epidoc-xslt:/epidoc-xslt
     - repo:/srv
     - maven:/root/.m2
     links:
