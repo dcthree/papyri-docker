@@ -24,9 +24,10 @@ sed -i -e '/^DocumentRoot /d' /usr/local/apache2/conf/httpd.conf
 # echo "LoadModule headers_module modules/mod_headers.so" >> /usr/local/apache2/conf/httpd.conf
 # echo "LoadModule alias_module modules/mod_alias.so" >> /usr/local/apache2/conf/httpd.conf
 
-if [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
+if true; then # [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
   echo "Updating httpd.conf..."
-  cat /srv/data/papyri.info/git/navigator/pn-config/pi.conf >> /usr/local/apache2/conf/httpd.conf
+  rm -f /usr/local/apache2/conf/httpd.conf.lock
+  cat /root/default_httpd.conf /srv/data/papyri.info/git/navigator/pn-config/pi.conf > /usr/local/apache2/conf/httpd.conf
   sed -i -e 's/localhost:8090/fuseki:8090/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e 's/localhost:8083/tomcat-pn:8080/g' /usr/local/apache2/conf/httpd.conf
   # sed -i -e 's/localhost:8082/sosol:3000/g' /usr/local/apache2/conf/httpd.conf
