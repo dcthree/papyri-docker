@@ -16,7 +16,14 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; t
   sed -i -e "s/NUMBERS_SERVER_DOMAIN = 'papyri.info'/NUMBERS_SERVER_DOMAIN = 'httpd'/" /root/sosol/lib/numbers_rdf.rb
   cp -R /root/sosol /srv/data/papyri.info/sosol/editor
   cp -Rv /opt/sosol-compose/config/* /srv/data/papyri.info/sosol/editor/config
+  echo "Capistrano"
+  cd /srv/data/papyri.info/sosol/editor && bundle exec cap local externals:setup
+  echo "Assets (RAILS_RELATIVE_URL_ROOT)"
+  cd /srv/data/papyri.info/sosol/editor && RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile
+  ls /srv/data/papyri.info/sosol/editor/public
+  echo "Migrate"
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
+  echo "Warble"
   cd /srv/data/papyri.info/sosol/editor && bundle exec warble war && touch editor.war.lock
 else
   echo "editor.war.lock found, skipping generating editor.war"
