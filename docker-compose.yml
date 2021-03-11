@@ -3,11 +3,11 @@ services:
   httpd:
     build: apache
     links:
-    - "tomcat-sosol"
     - "tomcat-pn"
     - "xsugar"
     - "fuseki"
     - "solr"
+    - "sosol"
     volumes:
     - repo:/srv
     ports:
@@ -18,7 +18,7 @@ services:
     - solr
     - fuseki
     - indexer
-    - tomcat-sosol
+    - sosol
   sosol:
     build: sosol
     # ports:
@@ -95,17 +95,6 @@ services:
     volumes:
     - ./mysql:/docker-entrypoint-initdb.d
     - mysql_data:/var/lib/mysql
-  tomcat-sosol:
-    build: tomcat-sosol
-    links:
-    - "mysql"
-    - "xsugar"
-    ports:
-    - "8080:8080"
-    volumes:
-    - repo:/srv
-    depends_on:
-    - sosol
   solr:
     build: solr
     ports:

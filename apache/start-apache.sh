@@ -2,7 +2,7 @@
 
 /root/wait-for-it.sh -t 9999 xsugar:9999
 /root/wait-for-it.sh -t 9999 fuseki:8090
-/root/wait-for-it.sh -t 9999 tomcat-sosol:8080
+/root/wait-for-it.sh -t 9999 sosol:8080
 /root/wait-for-it.sh -t 99999 tomcat-pn:8080
 
 WAIT_FILE="/srv/data/papyri.info/git/navigator/pn-config/pi.conf"
@@ -31,7 +31,7 @@ if true; then # [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
   sed -i -e 's/localhost:8090/fuseki:8090/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e 's/localhost:8083/tomcat-pn:8080/g' /usr/local/apache2/conf/httpd.conf
   # sed -i -e 's/localhost:8082/sosol:3000/g' /usr/local/apache2/conf/httpd.conf
-  sed -i -e 's/localhost:8082/tomcat-sosol:8080/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:8082/sosol:8080/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e 's/localhost:9999/xsugar:9999/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
   sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf

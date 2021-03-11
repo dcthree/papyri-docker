@@ -8,8 +8,6 @@ done
 echo "${WAIT_LOCK} detected"
 
 if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; then
-  echo "generating editor.war"
-  rm -fv /srv/data/papyri.info/sosol/editor/editor.war /srv/data/papyri.info/sosol/editor/editor.war.lock
   /opt/sosol-compose/wait-for-it.sh -t 9999 mysql:3306
   rm -rf /srv/data/papyri.info/sosol/editor
   mkdir -p /srv/data/papyri.info/sosol
@@ -20,14 +18,13 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; t
   cd /srv/data/papyri.info/sosol/editor && bundle exec cap local externals:setup
   echo "Assets (RAILS_RELATIVE_URL_ROOT)"
   cd /srv/data/papyri.info/sosol/editor && RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile
-  ls /srv/data/papyri.info/sosol/editor/public
   echo "Migrate"
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
-  echo "Warble"
-  cd /srv/data/papyri.info/sosol/editor && bundle exec warble war && touch editor.war.lock
-else
-  echo "editor.war.lock found, skipping generating editor.war"
+  echo "Puma"
+  RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production start-stop-daemon --start --quiet --oknodo --chdir /srv/data/papyri.info/sosol/editor --pidfile /tmp/puma.pid --background --exec "$(which bundle)" -- exec rails server -b 0.0.0.0 -p 8080
+  echo "Rails server daemon started"
+  touch /srv/data/papyri.info/sosol/editor/log/production.log
+  tail -f /srv/data/papyri.info/sosol/editor/log/production.log
 fi
 
-echo "done building editor.war"
 exit 0
