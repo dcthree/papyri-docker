@@ -46,9 +46,8 @@ Service startup order is important, and the current `docker-compose.yml` uses se
 
 1. [`wait-for-it.sh`](https://github.com/vishnubob/wait-for-it) used to wait for network service availability; `indexer` uses it to wait for `solr` startup, `sosol` uses it to wait for `mysql` startup
 2. lockfiles on shared volumes are used to enforce processes that only need to run once only running once; these lockfiles are also sometimes used as a wait signal for containers that need the process to finish before they can run (these busy-wait until the lockfile exists)
-3. `links` and `depends_on` clauses in `docker-compose` 2.2 syntax
 
-Note that this last strategy will only really *enforce* ordering with `docker-compose` v2 syntax.
+Some containers also use `links` and `depends_on` clauses, but these are no longer relied upon to enforce startup order.
 
 ## Servers vs. Processes
 
