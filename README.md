@@ -42,6 +42,19 @@ The papyri.info "Top Level Data Flow" diagram may help with understanding:
 
 ## Service Startup Order
 
+Services get started in the following order:
+
+* `mysql`: no service/startup dependencies
+* `fuseki`: no service/startup dependencies
+* `xsugar`: no service/startup dependencies
+* `repo_clone`:  and other Git repositories, clones `canonical`
+* `navigator`: once `canonical` is cloned and `fuseki` is up, sets config for `solr`, builds WAR files for `tomcat-pn`, runs "mapping" which loads data into `fuseki`
+* `solr`: once solr config (`/opt/solr/server/solr/solr.xml.lock`) is in place, written by `navigator`
+* `indexer`: once `fuseki` and `solr` are up and `mapping` is done, runs "indexing" which loads data into `solr`
+* `tomcat-pn`: once WAR files are built by `navigator` and "mapping" is done
+* `sosol`: once `canonical` is cloned and `mysql` is started and listening on 3306, though some functionality depends on `fuseki` (as well as "mapping" from `navigator`) and `xsugar`
+* `httpd`: once `/srv/data/papyri.info/git/navigator/pn-config/pi.conf` is in place and the proxied services `sosol`, `xsugar`, `tomcat-pn`, `fuseki`, and `solr` are available, Apache is started up as `httpd`
+
 Service startup order is important, and the current `docker-compose.yml` uses several strategies to control it:
 
 1. [`wait-for-it.sh`](https://github.com/vishnubob/wait-for-it) used to wait for network service availability; `indexer` uses it to wait for `solr` startup, `sosol` uses it to wait for `mysql` startup
