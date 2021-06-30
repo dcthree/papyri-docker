@@ -47,7 +47,7 @@ Services get started in the following order:
 * `mysql`: no service/startup dependencies
 * `fuseki`: no service/startup dependencies
 * `xsugar`: no service/startup dependencies
-* `repo_clone`:  and other Git repositories, clones `canonical`
+* `repo_clone`:  no service/startup dependencies, clones `canonical`
 * `navigator`: once `canonical` is cloned and `fuseki` is up, sets config for `solr`, builds WAR files for `tomcat-pn`, runs "mapping" which loads data into `fuseki`
 * `solr`: once solr config (`/opt/solr/server/solr/solr.xml.lock`) is in place, written by `navigator`
 * `indexer`: once `fuseki` and `solr` are up and `mapping` is done, runs "indexing" which loads data into `solr`
