@@ -63,7 +63,7 @@ fi
 
 if [ ! -e "/srv/data/papyri.info/pn/docs" ]; then
   mkdir -p /srv/data/papyri.info/pn
-  git clone https://github.com/dclp/site-docs.git /srv/data/papyri.info/pn/docs
+  git clone https://github.com/papyri/site-docs.git /srv/data/papyri.info/pn/docs
 fi
 
 if [ ! -e "$LOCK_FILE" ]; then
