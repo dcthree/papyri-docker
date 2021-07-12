@@ -40,7 +40,7 @@ if [ ! -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
   sed -i -e 's/localhost:8983/solr:8983/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/main/webapp/WEB-INF/web.xml
   sed -i -e 's/localhost:8983/solr:8983/' /srv/data/papyri.info/git/navigator/pn-dispatcher/src/test/java/info/papyri/dispatch/browse/facet/StringSearchFacetIT.java
-  cd /srv/data/papyri.info/git/navigator/pn-dispatcher && git revert -n c9d4e5c && mvn clean package
+  cd /srv/data/papyri.info/git/navigator/pn-dispatcher && mvn clean package
 else
   echo "dispatch.war already built, skipping"
 fi
