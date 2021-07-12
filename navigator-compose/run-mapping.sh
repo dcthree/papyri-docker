@@ -33,6 +33,8 @@ sed -i -e 's/localhost:8983/solr:8983/' /solr/pn-search/conf/xslt/example_atom.x
 sed -i -e 's/localhost:8983/solr:8983/' /solr/pn-search/conf/xslt/example_rss.xsl
 # sed -i -e 's/solr_hostname=localhost/solr_hostname=solr/' /srv/data/papyri.info/git/navigator/pn-solr/pn-search/conf/scripts.conf
 
+mkdir -p ~/.m2 && cp -v /root/m2settings.xml ~/.m2/settings.xml && sed -i -e "s/GITHUB_USERNAME/${GITHUB_USERNAME}/" -e "s/GITHUB_TOKEN/${GITHUB_TOKEN}/" ~/.m2/settings.xml
+
 # dispatch
 if [ ! -e "/srv/data/papyri.info/git/navigator/pn-dispatcher/target/dispatch.war" ]; then
   echo "building dispatch.war"

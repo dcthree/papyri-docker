@@ -57,6 +57,9 @@ services:
     - solr_data:/solr
     links:
     - "fuseki"
+    environment:
+    - GITHUB_USERNAME
+    - GITHUB_TOKEN
   indexer:
     build: indexer
     depends_on:
