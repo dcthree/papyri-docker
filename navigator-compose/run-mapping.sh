@@ -5,6 +5,16 @@ LOCK_FILE="${LOCK_PATH}/mapping_done.lock"
 
 WAIT_LOCK="/srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock"
 
+if [ -z "$GITHUB_USERNAME" ]; then
+  echo "GITHUB_USERNAME environment variable must be set. See README."
+  exit 1
+fi
+
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "GITHUB_TOKEN environment variable must be set. See README."
+  exit 1
+fi
+
 echo "waiting for ${WAIT_LOCK}"
 until [ -e "${WAIT_LOCK}" ]; do
   sleep 1
