@@ -29,7 +29,7 @@ if [ ! -e "${LOCK_FILE}" ]; then
   sed -i -e 's/localhost:8090/fuseki:8090/' /srv/data/papyri.info/git/navigator/pn-indexer/src/info/papyri/indexer.clj
   sed -i -e 's/localhost:8983/solr:8983/' /srv/data/papyri.info/git/navigator/pn-indexer/src/info/papyri/indexer.clj
   sed -i -e 's/Xmx1G/Xmx8G/' /srv/data/papyri.info/git/navigator/pn-indexer/project.clj
-  cd /srv/data/papyri.info/git/navigator/pn-indexer && /root/wait-for-it.sh -t 9999 solr:8983 -- sleep 30 && lein run && touch $LOCK_FILE
+  cd /srv/data/papyri.info/git/navigator/pn-indexer && /root/wait-for-it.sh -t 9999 solr:8983 -- sleep 30 && lein run biblio && lein run load-lemmas && lein run && touch $LOCK_FILE
   echo "indexing done"
 else
   echo "${LOCK_FILE} already exists, skipping indexing"
