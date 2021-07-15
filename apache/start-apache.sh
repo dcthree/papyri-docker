@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/root/wait-for-it.sh -t 9999 xsugar:9999
+/root/wait-for-it.sh -t 9999 xsugar:8080
 /root/wait-for-it.sh -t 9999 fuseki:8090
 /root/wait-for-it.sh -t 9999 sosol:8080
 /root/wait-for-it.sh -t 99999 tomcat-pn:8080
@@ -32,7 +32,7 @@ if true; then # [ ! -e "/usr/local/apache2/conf/httpd.conf.lock" ]; then
   sed -i -e 's/localhost:8083/tomcat-pn:8080/g' /usr/local/apache2/conf/httpd.conf
   # sed -i -e 's/localhost:8082/sosol:3000/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e 's/localhost:8082/sosol:8080/g' /usr/local/apache2/conf/httpd.conf
-  sed -i -e 's/localhost:9999/xsugar:9999/g' /usr/local/apache2/conf/httpd.conf
+  sed -i -e 's/localhost:9999/xsugar:8080/g' /usr/local/apache2/conf/httpd.conf
   sed -i -e '/^ServerName.*$/d' /usr/local/apache2/conf/httpd.conf
   sed -i -e '/^ServerAlias.*$/d' /usr/local/apache2/conf/httpd.conf
   touch /usr/local/apache2/conf/httpd.conf.lock
