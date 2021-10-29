@@ -30,8 +30,10 @@ services:
     links:
     - "xsugar"
     - "mysql"
+    - "postgres"
     depends_on:
     - mysql
+    - postgres
     - repo_clone
     - xsugar
   repo_clone:
@@ -120,6 +122,7 @@ services:
     build: tomcat-pn
     links:
     - "mysql"
+    - "postgres"
     - "fuseki"
     # ports:
     # - "8080:8080"

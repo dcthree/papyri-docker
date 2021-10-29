@@ -8,7 +8,7 @@ done
 echo "${WAIT_LOCK} detected"
 
 if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; then
-  /opt/sosol-compose/wait-for-it.sh -t 9999 mysql:3306
+  /opt/sosol-compose/wait-for-it.sh -t 9999 postgres:5432
   rm -rf /srv/data/papyri.info/sosol/editor
   mkdir -p /srv/data/papyri.info/sosol
   sed -i -e "s/NUMBERS_SERVER_DOMAIN = 'papyri.info'/NUMBERS_SERVER_DOMAIN = 'httpd'/" /root/sosol/lib/numbers_rdf.rb
