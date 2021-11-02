@@ -17,8 +17,7 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql
-  database: idp2
-  username: pn
-  password: p4pyr!
-  host: mysql
+  adapter: postgresql
+  database: papyri
+  username: papyri
+  host: postgres

@@ -29,9 +29,9 @@ services:
     command: /opt/sosol-compose/migrate-and-copy.sh
     links:
     - "xsugar"
-    - "mysql"
+    - "postgres"
     depends_on:
-    - mysql
+    - postgres
     - repo_clone
     - xsugar
   repo_clone:
@@ -90,15 +90,13 @@ services:
     - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
     ports:
     - "8090:8090"
-  mysql:
-    image: mysql:5.6
+  postgres:
+    image: postgres:13
     environment:
-    - MYSQL_RANDOM_ROOT_PASSWORD=yes
-    - MYSQL_USER=pn
-    - MYSQL_PASSWORD=p4pyr!
+    - POSTGRES_USER=papyri
+    - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-    - ./mysql:/docker-entrypoint-initdb.d
-    - mysql_data:/var/lib/mysql
+    - postgres_data:/var/lib/postgresql/data
   solr:
     build: solr
     ports:
@@ -112,7 +110,7 @@ services:
   tomcat-pn:
     build: tomcat-pn
     links:
-    - "mysql"
+    - "postgres"
     - "fuseki"
     # ports:
     # - "8080:8080"
@@ -123,6 +121,6 @@ services:
 volumes:
   repo:
   maven:
-  mysql_data:
   fuseki_data:
   solr_data:
+  postgres_data:

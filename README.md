@@ -35,7 +35,7 @@ Then, from this repository's directory:
     * `solr`: Tomcat server running Apache Solr for search
   * `sosol`: Puma server serving the Rails [Editor (aka "SoSOL")](http://github.com/sosol/sosol) application
     * `xsugar`: container that runs [XSugar](https://github.com/papyri/xsugar), an XML transformer used by `sosol`
-  * `mysql`: MySQL 5.6 server, shared by `sosol`, and `tomcat-pn`
+  * `postgres`: PostgreSQL 13 server, shared by `sosol`, and `tomcat-pn`
   * `repo_clone`: shared Git checkout of the large main [`idp.data`](https://github.com/papyri/idp.data) repository, shared by `navigator`, `fuseki`, `tomcat-pn`, `sosol`, & `httpd`
 
 The papyri.info "Top Level Data Flow" diagram may help with understanding:
@@ -46,7 +46,7 @@ The papyri.info "Top Level Data Flow" diagram may help with understanding:
 
 Services get started in the following order:
 
-* `mysql`: no service/startup dependencies
+* `ppostgres`: no service/startup dependencies
 * `fuseki`: no service/startup dependencies
 * `xsugar`: no service/startup dependencies
 * `repo_clone`:  no service/startup dependencies, clones `canonical`
