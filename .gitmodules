@@ -13,4 +13,4 @@
 	branch = rails-3-nfd
 [submodule "epidoc-xslt"]
 	path = epidoc-xslt
-	url = https://github.com/papyri/Stylesheets.git
+	url = https://github.com/EpiDoc/Stylesheets.git
