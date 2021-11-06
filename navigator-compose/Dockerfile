@@ -1,10 +1,10 @@
-FROM ubuntu:xenial
+FROM ubuntu:focal
 MAINTAINER Ryan Baumann <ryan.baumann@gmail.com>
 
 # Install Git
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
-  apt-get install -y git subversion wget locales build-essential maven openjdk-8-jdk curl
+  apt-get install -y git subversion wget locales build-essential maven openjdk-11-jdk curl
 
 # Set the locale.
 RUN locale-gen en_US.UTF-8
