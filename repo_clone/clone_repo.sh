@@ -11,12 +11,17 @@ mkdir -p "$LOCK_PATH"
 # rm -rf $REPO_PATH $LOCK_FILE $WORKING_COPY_PATH
 if [ ! -d "$REPO_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "Cloning repo..."
+  # git clone --bare https://github.com/papyri/idp.data.git $REPO_PATH && git clone --branch master --single-branch $REPO_PATH $WORKING_COPY_PATH
   git clone --bare /docker-compose/idp.data $REPO_PATH && git clone --branch master --single-branch $REPO_PATH $WORKING_COPY_PATH
   echo "repo clone done"
-elif [ ! -d "$WORKING_COPY_PATH" ]; then
+fi
+
+if [ "$REPO_PATH" ] && [ ! -d "$WORKING_COPY_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "Working copy doesn't exist, cloning..."
   git clone --branch master --single-branch $REPO_PATH $WORKING_COPY_PATH && touch "$LOCK_FILE"
-else
+fi
+
+if [ -d "$REPO_PATH" ] && [ -d "$WORKING_COPY_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "Repo already exists, touching $LOCK_FILE"
   touch "$LOCK_FILE"
 fi
