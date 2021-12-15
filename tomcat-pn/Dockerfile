@@ -1,4 +1,4 @@
-FROM tomcat:7
+FROM tomcat:9-jdk11
 
 # RUN apt-get update && apt-get install -y git default-mysql-client && rm -rf /var/lib/apt/lists/*
 

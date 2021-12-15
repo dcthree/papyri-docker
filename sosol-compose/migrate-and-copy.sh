@@ -21,10 +21,10 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; t
   echo "Migrate"
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
   echo "Puma"
-  RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production start-stop-daemon --start --quiet --oknodo --chdir /srv/data/papyri.info/sosol/editor --pidfile /tmp/puma.pid --background --exec "$(which bundle)" -- exec rails server -b 0.0.0.0 -p 8080
-  echo "Rails server daemon started"
-  touch /srv/data/papyri.info/sosol/editor/log/production.log
-  tail -f /srv/data/papyri.info/sosol/editor/log/production.log
+  RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production bundle exec rails server -b 0.0.0.0 -p 8080
+  # echo "Rails server daemon started"
+  # touch /srv/data/papyri.info/sosol/editor/log/production.log
+  # tail -f /srv/data/papyri.info/sosol/editor/log/production.log
 fi
 
 exit 0
