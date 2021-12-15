@@ -79,7 +79,7 @@ services:
     - apparmor:unconfined
   fuseki:
     # built from https://github.com/dcthree/docker-fuseki
-    image: ryanfb/fuseki
+    image: ryanfb/fuseki:4.3.1
     volumes:
     - repo:/srv
     - fuseki_data:/data
