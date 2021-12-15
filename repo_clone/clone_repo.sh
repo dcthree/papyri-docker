@@ -16,7 +16,7 @@ if [ ! -d "$REPO_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "repo clone done"
 fi
 
-if [ "$REPO_PATH" ] && [ ! -d "$WORKING_COPY_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
+if [ -d "$REPO_PATH" ] && [ ! -d "$WORKING_COPY_PATH" ] && [ ! -e "$LOCK_FILE" ]; then
   echo "Working copy doesn't exist, cloning..."
   git clone --branch master --single-branch $REPO_PATH $WORKING_COPY_PATH && touch "$LOCK_FILE"
 fi
