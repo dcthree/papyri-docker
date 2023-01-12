@@ -20,8 +20,8 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; t
   cd /srv/data/papyri.info/sosol/editor && RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production RAILS_GROUPS=assets bundle exec rake assets:precompile
   echo "Migrate"
   cd /srv/data/papyri.info/sosol/editor && bundle exec rake db:migrate RAILS_ENV="production"
-  echo "Puma"
-  RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production bundle exec rails server -b 0.0.0.0 -p 8080
+  echo "Rails Server"
+  RAILS_RELATIVE_URL_ROOT='/editor' RAILS_ENV=production bundle exec rails server -b 0.0.0.0 -p 8080 -u webrick
   # echo "Rails server daemon started"
   # touch /srv/data/papyri.info/sosol/editor/log/production.log
   # tail -f /srv/data/papyri.info/sosol/editor/log/production.log
