@@ -8,22 +8,22 @@ Clone with:
 
 ## Running
 
-First, you need to obtain a [GitHub Personal Access Token with package registry permissions](https://docs.github.com/en/packages/learn-github-packages/about-permissions-for-github-packages#about-scopes-and-permissions-for-package-registries) (see "[Creating a personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)"), and set it as the environment variable `GITHUB_TOKEN` for the `docker-compose` process. You'll also need to set the environment variable `GITHUB_USERNAME` to your GitHub username. There are a variety of ways you can set these environment variables, [including using an unversioned `.env` file in the directory where you've cloned this repository](https://docs.docker.com/compose/environment-variables/). These environment variables must be available for the `navigator` container to successfully build packages.
+First, you need to obtain a [GitHub Personal Access Token with package registry permissions](https://docs.github.com/en/packages/learn-github-packages/about-permissions-for-github-packages#about-scopes-and-permissions-for-package-registries) (see "[Creating a personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token)"), and set it as the environment variable `GITHUB_TOKEN` for the `docker compose` process. You'll also need to set the environment variable `GITHUB_USERNAME` to your GitHub username. There are a variety of ways you can set these environment variables, [including using an unversioned `.env` file in the directory where you've cloned this repository](https://docs.docker.com/compose/environment-variables/). These environment variables must be available for the `navigator` container to successfully build packages.
 
 Then, from this repository's directory:
 
-1. `docker-compose build`
-2. `docker-compose up -d`
-3. Watch logs in a separate terminal in the same directory: `docker-compose logs -f -t`
+1. `docker compose build`
+2. `docker compose up -d`
+3. Watch logs in a separate terminal in the same directory: `docker compose logs -f -t`
 4. If all is successful, you should be able to access the running copy once `httpd` comes up at: <http://127.0.0.1:8000>
 
 ## Gotchas
 
 * **Disk Space**: after bringing up a complete stack, my `docker system df` shows 40GB of images, 1GB of containers, and 26GB of volumes (**67GB total**). You may need to increase the default disk allocation if you're running e.g. Docker for Mac.
-* **Network Port**: if another service is already bound to port 8000, `httpd` will fail to come up. If this happens, you can just stop the other service and run `docker-compose up -d` again.
+* **Network Port**: if another service is already bound to port 8000, `httpd` will fail to come up. If this happens, you can just stop the other service and run `docker compose up -d` again.
 * **Memory**: I have 16GB of RAM, 1GB of swap, and 6 VCPUs allocated to Docker. Bringing this up makes my system quite slow...
-* **Initial Indexing**: if something goes wrong with the indexing process, you may need to use `docker-compose up -d --force-recreate` when re-trying.
-* **Docker Compose Timeout**: the default Docker Compose HTTP timeout of 60 seconds can sometimes cause problems with `docker-compose up`/`docker-compose stop`, due to the delay in responsiveness of some services. If you run into this, prefix the commands with e.g. `COMPOSE_HTTP_TIMEOUT=10000`.
+* **Initial Indexing**: if something goes wrong with the indexing process, you may need to use `docker compose up -d --force-recreate` when re-trying.
+* **Docker Compose Timeout**: the default Docker Compose HTTP timeout of 60 seconds can sometimes cause problems with `docker compose up`/`docker compose stop`, due to the delay in responsiveness of some services. If you run into this, prefix the commands with e.g. `COMPOSE_HTTP_TIMEOUT=10000`.
 
 ## Structure
 
