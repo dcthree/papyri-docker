@@ -24,6 +24,7 @@ Then, from this repository's directory:
 * **Memory**: I have 16GB of RAM, 1GB of swap, and 6 VCPUs allocated to Docker. Bringing this up makes my system quite slow...
 * **Initial Indexing**: if something goes wrong with the indexing process, you may need to use `docker compose up -d --force-recreate` when re-trying.
 * **Docker Compose Timeout**: the default Docker Compose HTTP timeout of 60 seconds can sometimes cause problems with `docker compose up`/`docker compose stop`, due to the delay in responsiveness of some services. If you run into this, prefix the commands with e.g. `COMPOSE_HTTP_TIMEOUT=10000`.
+* **Want to start over from scratch?**: run `docker compose down -v`.
 
 ## Structure
 
