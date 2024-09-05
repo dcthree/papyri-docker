@@ -1,0 +1,156 @@
+# todo: simplify or load minimum test info needed from local files 
+# for teardown and startup and to remove volumes
+
+services:
+
+  httpd:
+    build: apache
+    links:
+    - "tomcat-pn"
+    - "xsugar"
+    - "fuseki"
+    - "solr"
+    - "sosol"
+    volumes:
+    - repo:/srv
+    ports:
+    - "8000:80"
+    depends_on:
+    - xsugar
+    - tomcat-pn
+    - solr
+    - fuseki
+    - sosol
+  sosol:
+    build: sosol
+    ports:
+    - "8080:8080"
+    volumes:
+    - repo:/srv
+    - ./sosol-compose:/opt/sosol-compose
+    command: /opt/sosol-compose/migrate-and-copy.sh
+    links:
+    - "xsugar"
+    - "postgres"
+    depends_on:
+    - postgres
+    - repo_clone
+    - xsugar
+  repo_clone:
+    build: repo_clone
+    volumes:
+    - ./:/docker-compose
+    - repo:/srv
+  xsugar:
+    build: xsugar
+    # ports:
+    # - "9999:9999"
+    volumes:
+    - maven:/root/.m2
+  navigator:
+    build: navigator-compose
+    depends_on:
+    - repo_clone
+    - fuseki
+    volumes:
+    - ./navigator:/navigator
+    - repo:/srv
+    - maven:/root/.m2
+    - solr_data:/solr
+    links:
+    - "fuseki"
+  # indexer:
+  #   build: indexer
+  #   depends_on:
+  #   - navigator
+  #   - fuseki
+  #   - solr
+  #   volumes:
+  #   - ./epidoc-xslt:/epidoc-xslt
+  #   - repo:/srv
+  #   - maven:/root/.m2
+  #   links:
+  #   - "fuseki"
+  #   - "solr"
+  #   cap_add:
+  #   - SYS_PTRACE
+  #   security_opt:
+  #   - apparmor:unconfined
+  fuseki:
+    # built from https://github.com/dcthree/docker-fuseki
+    image: ryanfb/fuseki
+    volumes:
+    - repo:/srv
+    - fuseki_data:/data
+    cpu_count: 2
+    environment:
+    - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
+    - JVM_ARGS=-Xmx8192M
+    - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+    ports:
+    - "8090:8090"
+  postgres:
+    image: postgres:13
+    environment:
+    - POSTGRES_USER=papyri
+    - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+  solr:
+    build: solr
+    ports:
+    - "8983:8983"
+    volumes:
+    - solr_data:/opt/solr/server/solr
+    environment:
+    - SOLR_JAVA_MEM=-Xms1G -Xmx8G
+    depends_on:
+    - navigator
+  tomcat-pn:
+    build: tomcat-pn
+    links:
+    - "postgres"
+    - "fuseki"
+    # ports:
+    # - "8080:8080"
+    volumes:
+    - repo:/srv
+    depends_on:
+    - navigator
+    
+    
+  ruby_acceptance_tests:
+    build: selenium-ruby
+    depends_on:
+    - selenium
+    - httpd
+    ports:
+    - "1111:1111"
+    links:
+    - "selenium"
+    - "httpd"
+    environment:
+    - SELENIUM_HOST=selenium
+    - SELENIUM_PORT=4444
+    profiles:
+      - test
+
+  selenium:
+    image: selenium/standalone-chromium:latest
+    ports:
+    - "4444:4444"
+    - "7900:7900"
+    shm_size: 2g
+    profiles:
+      - test
+
+networks:
+  selenium-net:
+    driver: bridge
+
+volumes:
+  repo:
+  maven:
+  fuseki_data:
+  solr_data:
+  postgres_data:
