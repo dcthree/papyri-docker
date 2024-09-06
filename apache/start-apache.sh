@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/root/wait-for-it.sh -t 9999 xsugar:9999
+/root/wait-for-it.sh -t 9999 xsugar:8080
 /root/wait-for-it.sh -t 9999 fuseki:8090
 /root/wait-for-it.sh -t 9999 sosol:8080
 /root/wait-for-it.sh -t 99999 tomcat-pn:8080
