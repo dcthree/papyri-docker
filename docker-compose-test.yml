@@ -38,44 +38,15 @@ services:
     - xsugar
   repo_clone:
     build: repo_clone
-    volumes:
-    - ./:/docker-compose
-    - repo:/srv
   xsugar:
     build: xsugar
-    # ports:
-    # - "9999:9999"
-    volumes:
-    - maven:/root/.m2
   navigator:
     build: navigator-compose
     depends_on:
     - repo_clone
     - fuseki
-    volumes:
-    - ./navigator:/navigator
-    - repo:/srv
-    - maven:/root/.m2
-    - solr_data:/solr
     links:
     - "fuseki"
-  # indexer:
-  #   build: indexer
-  #   depends_on:
-  #   - navigator
-  #   - fuseki
-  #   - solr
-  #   volumes:
-  #   - ./epidoc-xslt:/epidoc-xslt
-  #   - repo:/srv
-  #   - maven:/root/.m2
-  #   links:
-  #   - "fuseki"
-  #   - "solr"
-  #   cap_add:
-  #   - SYS_PTRACE
-  #   security_opt:
-  #   - apparmor:unconfined
   fuseki:
     # built from https://github.com/dcthree/docker-fuseki
     image: ryanfb/fuseki
@@ -94,8 +65,6 @@ services:
     environment:
     - POSTGRES_USER=papyri
     - POSTGRES_HOST_AUTH_METHOD=trust
-    volumes:
-    - postgres_data:/var/lib/postgresql/data
   solr:
     build: solr
     ports:
@@ -111,8 +80,6 @@ services:
     links:
     - "postgres"
     - "fuseki"
-    # ports:
-    # - "8080:8080"
     volumes:
     - repo:/srv
     depends_on:
@@ -137,6 +104,14 @@ services:
 
   selenium:
     image: selenium/standalone-chromium:latest
+    links: 
+      - "httpd"
+    # # Test to see if the service is healthy
+    # healthcheck: 
+    #   test: ["CMD", "curl", "-f", "http://httpd:80/"]
+    #   interval: 20s
+    #   timeout: 15s
+    #   retries: 5
     ports:
     - "4444:4444"
     - "7900:7900"
@@ -150,7 +125,5 @@ networks:
 
 volumes:
   repo:
-  maven:
   fuseki_data:
   solr_data:
-  postgres_data:

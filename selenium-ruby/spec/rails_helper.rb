@@ -20,3 +20,4 @@ end
 
 Capybara.default_driver = :selenium_remote
 Capybara.javascript_driver = :selenium_remote
+Capybara.app_host = 'http://httpd:80'
