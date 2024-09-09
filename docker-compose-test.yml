@@ -26,6 +26,7 @@ services:
     ports:
     - "8080:8080"
     volumes:
+    # waiting for /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock
     - repo:/srv
     - ./sosol-compose:/opt/sosol-compose
     command: /opt/sosol-compose/migrate-and-copy.sh
@@ -50,9 +51,9 @@ services:
   fuseki:
     # built from https://github.com/dcthree/docker-fuseki
     image: ryanfb/fuseki
-    volumes:
-    - repo:/srv
-    - fuseki_data:/data
+    # volumes:
+    # - repo:/srv
+    # - fuseki_data:/data
     cpu_count: 2
     environment:
     - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
@@ -69,8 +70,8 @@ services:
     build: solr
     ports:
     - "8983:8983"
-    volumes:
-    - solr_data:/opt/solr/server/solr
+    # volumes:
+    # - solr_data:/opt/solr/server/solr
     environment:
     - SOLR_JAVA_MEM=-Xms1G -Xmx8G
     depends_on:
@@ -81,6 +82,7 @@ services:
     - "postgres"
     - "fuseki"
     volumes:
+    # waiting for /srv/data/papyri.info/lockfiles/navigator/mapping_done.lock
     - repo:/srv
     depends_on:
     - navigator
