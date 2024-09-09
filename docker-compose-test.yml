@@ -89,8 +89,10 @@ services:
   ruby_acceptance_tests:
     build: selenium-ruby
     depends_on:
-    - selenium
-    - httpd
+      httpd:
+        condition: service_started
+      selenium:
+        condition: service_healthy
     ports:
     - "1111:1111"
     links:
@@ -99,25 +101,23 @@ services:
     environment:
     - SELENIUM_HOST=selenium
     - SELENIUM_PORT=4444
-    profiles:
-      - test
 
   selenium:
-    image: selenium/standalone-chromium:latest
+    image: selenium/standalone-chromium:4.24
     links: 
       - "httpd"
-    # # Test to see if the service is healthy
-    # healthcheck: 
-    #   test: ["CMD", "curl", "-f", "http://httpd:80/"]
-    #   interval: 20s
-    #   timeout: 15s
-    #   retries: 5
+    # Test to see if the service is healthy
+    # Testing here b/c installing curl on apache2.2(httpd) is a pain
+    # bc the package repos don't exist anymore
+    healthcheck: 
+      test: ["CMD", "curl", "-f", "http://httpd:80/"]
+      interval: 20s
+      timeout: 15s
+      retries: 5
     ports:
     - "4444:4444"
     - "7900:7900"
     shm_size: 2g
-    profiles:
-      - test
 
 networks:
   selenium-net:
