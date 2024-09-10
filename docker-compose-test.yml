@@ -27,7 +27,8 @@ services:
     - "8080:8080"
     volumes:
     # waiting for /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock
-    - repo:/srv
+    - ./selenium-ruby/shim/lockfiles/canonical_cloned.lock:/srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock #add shim
+    # - repo:/srv
     - ./sosol-compose:/opt/sosol-compose
     command: /opt/sosol-compose/migrate-and-copy.sh
     links:
@@ -83,6 +84,7 @@ services:
     - "fuseki"
     volumes:
     # waiting for /srv/data/papyri.info/lockfiles/navigator/mapping_done.lock
+    # - ./selenium-ruby/shim/lockfiles/mapping_done.lock:/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock #add shim
     - repo:/srv
     depends_on:
     - navigator
