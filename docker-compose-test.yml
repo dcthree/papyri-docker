@@ -20,15 +20,14 @@ services:
     - tomcat-pn
     - solr
     - fuseki
+    - indexer
     - sosol
   sosol:
     build: sosol
     ports:
     - "8080:8080"
     volumes:
-    # waiting for /srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock
-    - ./selenium-ruby/shim/lockfiles/canonical_cloned.lock:/srv/data/papyri.info/lockfiles/repo_clone/canonical_cloned.lock #add shim
-    # - repo:/srv
+    - repo-test:/srv
     - ./sosol-compose:/opt/sosol-compose
     command: /opt/sosol-compose/migrate-and-copy.sh
     links:
@@ -53,16 +52,36 @@ services:
     volumes:
     - ./navigator:/navigator
     - repo-test:/srv
+    - solr_data-test:/solr
     links:
     - "fuseki"
     env_file:
       - .env
+  indexer:
+    build: indexer
+    depends_on:
+      navigator:
+        condition: service_completed_successfully
+      fuseki:
+        condition: service_started
+      solr:
+        condition: service_started
+    volumes:
+    - ./epidoc-xslt:/epidoc-xslt
+    - repo-test:/srv
+    links:
+    - "fuseki"
+    - "solr"
+    cap_add:
+    - SYS_PTRACE
+    security_opt:
+    - apparmor:unconfined
   fuseki:
     # built from https://github.com/dcthree/docker-fuseki
     image: ryanfb/fuseki
-    # volumes:
-    # - repo:/srv
-    # - fuseki_data:/data
+    volumes:
+    - repo-test:/srv
+    - fuseki_data:/data
     cpu_count: 2
     environment:
     - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
@@ -79,20 +98,19 @@ services:
     build: solr
     ports:
     - "8983:8983"
-    # volumes:
-    # - solr_data:/opt/solr/server/solr
+    volumes:
+    - solr_data-test:/opt/solr/server/solr
     environment:
     - SOLR_JAVA_MEM=-Xms1G -Xmx8G
     depends_on:
-    - navigator
+      navigator:
+        condition: service_completed_successfully
   tomcat-pn:
     build: tomcat-pn
     links:
     - "postgres"
     - "fuseki"
     volumes:
-    # waiting for /srv/data/papyri.info/lockfiles/navigator/mapping_done.lock
-    - ./selenium-ruby/shim/lockfiles/mapping_done.lock:/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock #add shim
     - repo-test:/srv
     depends_on:
       navigator:
@@ -138,4 +156,4 @@ networks:
 volumes:
   repo-test:
   fuseki_data:
-  solr_data:
+  solr_data-test:
