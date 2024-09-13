@@ -12,7 +12,7 @@ services:
     - "solr"
     - "sosol"
     volumes:
-    - repo:/srv
+    - repo-test:/srv
     ports:
     - "8000:80"
     depends_on:
@@ -40,6 +40,9 @@ services:
     - xsugar
   repo_clone:
     build: repo_clone
+    volumes:
+    - ./:/docker-compose
+    - repo-test:/srv
   xsugar:
     build: xsugar
   navigator:
@@ -47,8 +50,13 @@ services:
     depends_on:
     - repo_clone
     - fuseki
+    volumes:
+    - ./navigator:/navigator
+    - repo-test:/srv
     links:
     - "fuseki"
+    env_file:
+      - .env
   fuseki:
     # built from https://github.com/dcthree/docker-fuseki
     image: ryanfb/fuseki
@@ -84,11 +92,11 @@ services:
     - "fuseki"
     volumes:
     # waiting for /srv/data/papyri.info/lockfiles/navigator/mapping_done.lock
-    # - ./selenium-ruby/shim/lockfiles/mapping_done.lock:/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock #add shim
-    - repo:/srv
+    - ./selenium-ruby/shim/lockfiles/mapping_done.lock:/srv/data/papyri.info/lockfiles/navigator/mapping_done.lock #add shim
+    - repo-test:/srv
     depends_on:
-    - navigator
-    
+      navigator:
+        condition: service_completed_successfully
     
   ruby_acceptance_tests:
     build: selenium-ruby
@@ -128,6 +136,6 @@ networks:
     driver: bridge
 
 volumes:
-  repo:
+  repo-test:
   fuseki_data:
   solr_data:
