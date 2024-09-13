@@ -81,7 +81,7 @@ services:
     image: ryanfb/fuseki
     volumes:
     - repo-test:/srv
-    - fuseki_data:/data
+    - fuseki_data-test:/data
     cpu_count: 2
     environment:
     - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
@@ -123,6 +123,8 @@ services:
         condition: service_started
       selenium:
         condition: service_healthy
+      indexer:
+        condition: service_completed_successfully
     ports:
     - "1111:1111"
     links:
@@ -155,5 +157,5 @@ networks:
 
 volumes:
   repo-test:
-  fuseki_data:
+  fuseki_data-test:
   solr_data-test:
