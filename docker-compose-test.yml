@@ -1,0 +1,161 @@
+# todo: simplify or load minimum test info needed from local files 
+# for teardown and startup and to remove volumes
+
+services:
+
+  httpd:
+    build: apache
+    links:
+    - "tomcat-pn"
+    - "xsugar"
+    - "fuseki"
+    - "solr"
+    - "sosol"
+    volumes:
+    - repo-test:/srv
+    ports:
+    - "8000:80"
+    depends_on:
+    - xsugar
+    - tomcat-pn
+    - solr
+    - fuseki
+    - indexer
+    - sosol
+  sosol:
+    build: sosol
+    ports:
+    - "8080:8080"
+    volumes:
+    - repo-test:/srv
+    - ./sosol-compose:/opt/sosol-compose
+    command: /opt/sosol-compose/migrate-and-copy.sh
+    links:
+    - "xsugar"
+    - "postgres"
+    depends_on:
+    - postgres
+    - repo_clone
+    - xsugar
+  repo_clone:
+    build: repo_clone
+    volumes:
+    - ./:/docker-compose
+    - repo-test:/srv
+  xsugar:
+    build: xsugar
+  navigator:
+    build: navigator-compose
+    depends_on:
+    - repo_clone
+    - fuseki
+    volumes:
+    - ./navigator:/navigator
+    - repo-test:/srv
+    - solr_data-test:/solr
+    links:
+    - "fuseki"
+    env_file:
+      - .env
+  indexer:
+    build: indexer
+    depends_on:
+      navigator:
+        condition: service_completed_successfully
+      fuseki:
+        condition: service_started
+      solr:
+        condition: service_started
+    volumes:
+    - ./epidoc-xslt:/epidoc-xslt
+    - repo-test:/srv
+    links:
+    - "fuseki"
+    - "solr"
+    cap_add:
+    - SYS_PTRACE
+    security_opt:
+    - apparmor:unconfined
+  fuseki:
+    # built from https://github.com/dcthree/docker-fuseki
+    image: ryanfb/fuseki
+    volumes:
+    - repo-test:/srv
+    - fuseki_data-test:/data
+    cpu_count: 2
+    environment:
+    - OPTS=--port=8090 --tdb2 --loc=/data --update /pi
+    - JVM_ARGS=-Xmx8192M
+    - JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+    ports:
+    - "8090:8090"
+  postgres:
+    image: postgres:13
+    environment:
+    - POSTGRES_USER=papyri
+    - POSTGRES_HOST_AUTH_METHOD=trust
+  solr:
+    build: solr
+    ports:
+    - "8983:8983"
+    volumes:
+    - solr_data-test:/opt/solr/server/solr
+    environment:
+    - SOLR_JAVA_MEM=-Xms1G -Xmx8G
+    depends_on:
+      navigator:
+        condition: service_completed_successfully
+  tomcat-pn:
+    build: tomcat-pn
+    links:
+    - "postgres"
+    - "fuseki"
+    volumes:
+    - repo-test:/srv
+    depends_on:
+      navigator:
+        condition: service_completed_successfully
+    
+  ruby_acceptance_tests:
+    build: selenium-ruby
+    depends_on:
+      httpd:
+        condition: service_started
+      selenium:
+        condition: service_healthy
+      indexer:
+        condition: service_completed_successfully
+    ports:
+    - "1111:1111"
+    links:
+    - "selenium"
+    - "httpd"
+    environment:
+    - SELENIUM_HOST=selenium
+    - SELENIUM_PORT=4444
+
+  selenium:
+    image: selenium/standalone-chromium:4.24
+    links: 
+      - "httpd"
+    # Test to see if the service is healthy
+    # Testing here b/c installing curl on apache2.2(httpd) is a pain
+    # bc the package repos don't exist anymore
+    healthcheck: 
+      test: ["CMD", "curl", "-f", "http://httpd:80/"]
+      interval: 20s
+      timeout: 15s
+      retries: 5
+    ports:
+    - "4444:4444"
+    - "7900:7900"
+    shm_size: 2g
+
+networks:
+  selenium-net:
+    driver: bridge
+
+volumes:
+  repo-test:
+  fuseki_data-test:
+  solr_data-test:
