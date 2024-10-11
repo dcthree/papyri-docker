@@ -1,6 +1,9 @@
 FROM ubuntu:focal
 MAINTAINER Ryan Baumann <ryan.baumann@gmail.com>
 
+# arguments passed to the clojure indexer script
+ARG INDEXING_ARGS="lein run biblio && lein run load-lemmas && lein run"
+
 # Install Git
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
@@ -16,4 +19,5 @@ ENV LEIN_ROOT true
 ADD https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein /usr/local/bin/lein
 RUN chmod a+x /usr/local/bin/lein
 ADD . /root
+RUN sed -i "s/lein run biblio && lein run load-lemmas && lein run/$INDEXING_ARGS/g" /root/run-indexing.sh
 CMD /root/run-indexing.sh
