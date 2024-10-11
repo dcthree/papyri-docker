@@ -1,2 +1,5 @@
 *.log
 .env
+
+selenium-ruby/backups/*
+!selenium-ruby/backups/solr-backup.sh
