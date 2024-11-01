@@ -7,4 +7,4 @@ build:
 	docker compose -f docker-compose-test.yml build
 
 test:
-	docker compose -f docker-compose-test.yml run selenium_ui_tests --abort-on-container-exit --exit-code-from app
+	docker compose -f docker-compose-test.yml run -e GITHUB_TOKEN -e GITHUB_USERNAME selenium_ui_tests --abort-on-container-exit --exit-code-from app
