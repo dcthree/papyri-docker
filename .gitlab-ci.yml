@@ -6,6 +6,10 @@ include:
       - /templates/environments.gitlab-ci.yml
       - /templates/tag-release-version.gitlab-ci.yml
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_DEPTH: 3
+
 stages:
   - build
   - test
