@@ -54,6 +54,8 @@ services:
     - solr_data-test:/solr
     links:
     - "fuseki"
+    env_file:
+      - .env
   indexer:
     build:
       context: indexer
