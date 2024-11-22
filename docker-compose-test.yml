@@ -2,7 +2,6 @@
 # for teardown and startup and to remove volumes
 
 services:
-
   httpd:
     build: apache
     links:
@@ -126,6 +125,7 @@ services:
         condition: service_completed_successfully
     
   selenium_ui_tests:
+    image: ${build_tag}
     build: selenium-ruby
     depends_on:
       httpd:
