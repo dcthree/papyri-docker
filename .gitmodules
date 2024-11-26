@@ -7,7 +7,7 @@
 [submodule "navigator"]
 	path = navigator
 	url = https://github.com/papyri/navigator.git
-  branch = jquery-updates
+	branch = jquery-updates
 [submodule "xsugar"]
 	path = xsugar
 	url = https://github.com/papyri/xsugar.git
