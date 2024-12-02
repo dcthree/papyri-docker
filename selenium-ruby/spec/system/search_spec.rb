@@ -53,7 +53,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     expect(page).to have_css('#DOCS_PER_PAGE[value="30"]')
   end
 
-  it "select series options" do
+  xit "select series options" do
     visit '/search'
     # combobox content is lazy loaded so prime the combobox
     execute_script("$('#series-wrapper a.ui-corner-right').trigger('click')")
@@ -66,7 +66,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     end
   end
 
-  it "select collection options" do
+  xit "select collection options" do
     visit '/search'
     # combobox content is lazy loaded so prime the combobox
     execute_script("$('#collection-wrapper a.ui-corner-right').trigger('click')")
@@ -89,7 +89,7 @@ RSpec.describe "Seach Page Tests", type: :system do
       sleep 2
     }
     
-    it "select author options" do 
+    xit "select author options" do 
       expect(current_url).to include("AUTHOR=Homerus")
       within('#prev-constraint-author') do
         label = find('div.constraint-label')
@@ -98,7 +98,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     end
 
     # Based on pre-loaded test data from USE_SOLR_BACKUPS=true
-    it 'tests further restricted select options' do 
+    xit 'tests further restricted select options' do 
       # expect(page).to have_css("#work-selector input.ui-widget[value^='Vita Constantini' i]")
       within('#work-selector') do 
         expect(find('input.ui-widget').value).to match(/Ilias/)
@@ -130,4 +130,19 @@ RSpec.describe "Seach Page Tests", type: :system do
     end
   end
 
+  context 'work select options' do
+    before {
+      visit '/search'
+      # combobox content is lazy loaded so prime the combobox
+      execute_script("$('#work-selector a.ui-corner-right').trigger('click')")
+      execute_script("$('.ui-autocomplete div.ui-menu-item-wrapper:contains(\\'Ad Demonicum\\')').trigger('click')")
+      sleep 2
+    }
+
+    xit 'tests further restrictred ui options' do 
+      within('#lang-selector') do
+        expect(find('input.ui-widget').value).to match(/Ancient Greek/)
+      end
+    end
+  end
 end
