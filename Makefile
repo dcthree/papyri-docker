@@ -7,7 +7,7 @@ build:
 	docker compose -f docker-compose-test.yml build
 
 test:
-	echo "GITHUB_TOKEN=${GITHUB_TOKEN}\nGITHUB_USERNAME=${GITHUB_USERNAME}\nUSE_SOLR_BACKUPS=true" > .env
+	echo "GITHUB_TOKEN=${GITHUB_TOKEN}\nGITHUB_USERNAME=${GITHUB_USERNAME}" > .env
 	# uncomment for a clean run
 	# docker compose -f docker-compose-test.yml down -v
 	mkdir -p ${CI_PROJECT_DIR}/selenium/screenshots
