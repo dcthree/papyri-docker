@@ -53,7 +53,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     expect(page).to have_css('#DOCS_PER_PAGE[value="30"]')
   end
 
-  xit "select series options" do
+  it "select series options" do
     visit '/search'
     # combobox content is lazy loaded so prime the combobox
     execute_script("$('#series-wrapper a.ui-corner-right').trigger('click')")
@@ -66,7 +66,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     end
   end
 
-  xit "select collection options" do
+  it "select collection options" do
     visit '/search'
     # combobox content is lazy loaded so prime the combobox
     execute_script("$('#collection-wrapper a.ui-corner-right').trigger('click')")
@@ -89,7 +89,7 @@ RSpec.describe "Seach Page Tests", type: :system do
       sleep 2
     }
     
-    xit "select author options" do 
+    it "select author options" do 
       expect(current_url).to include("AUTHOR=Homerus")
       within('#prev-constraint-author') do
         label = find('div.constraint-label')
@@ -98,7 +98,7 @@ RSpec.describe "Seach Page Tests", type: :system do
     end
 
     # Based on pre-loaded test data from USE_SOLR_BACKUPS=true
-    xit 'tests further restricted select options' do 
+    it 'tests further restricted select options' do 
       # expect(page).to have_css("#work-selector input.ui-widget[value^='Vita Constantini' i]")
       within('#work-selector') do 
         expect(find('input.ui-widget').value).to match(/Ilias/)
@@ -139,7 +139,7 @@ RSpec.describe "Seach Page Tests", type: :system do
       sleep 2
     }
 
-    xit 'tests further restrictred ui options' do 
+    it 'tests further restrictred ui options' do 
       within('#lang-selector') do
         expect(find('input.ui-widget').value).to match(/Ancient Greek/)
       end
