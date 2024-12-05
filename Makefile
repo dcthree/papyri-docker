@@ -8,6 +8,5 @@ build:
 
 test:
 	echo "GITHUB_TOKEN=${GITHUB_TOKEN}\nGITHUB_USERNAME=${GITHUB_USERNAME}" > .env
-	docker compose -f docker-compose-test.yml run selenium_ui_tests
 	mkdir -p ${CI_PROJECT_DIR}/selenium/screenshots
 	docker compose -f docker-compose-test.yml run -v ${CI_PROJECT_DIR}/selenium/screenshots:/opt/selenium selenium_ui_tests
