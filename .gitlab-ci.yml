@@ -24,3 +24,7 @@ build:
 
 test:
   extends: .test
+  artifacts:
+    paths:
+      - selenium/screenshots
+    expire_in: 1 week
