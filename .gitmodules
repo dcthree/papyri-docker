@@ -14,3 +14,6 @@
 [submodule "epidoc-xslt"]
 	path = epidoc-xslt
 	url = https://github.com/EpiDoc/Stylesheets.git
+[submodule "epidocinator"]
+	path = epidocinator
+	url = git@gitlab.oit.duke.edu:papyri/epidocinator.git

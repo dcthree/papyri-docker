@@ -18,6 +18,11 @@ services:
     - fuseki
     - indexer
     - sosol
+    - epidocinator
+  epidocinator:
+    build: epidocinator
+    ports:
+    - "8085:8085"
   sosol:
     build: sosol
     ports:
@@ -26,13 +31,17 @@ services:
     - repo:/srv
     - ./sosol-compose:/opt/sosol-compose
     command: /opt/sosol-compose/migrate-and-copy.sh
+    environment:
+      - EPIDOCINATOR_URL=http://epidocinator:8085
     links:
+    - "epidocinator"
     - "xsugar"
     - "postgres"
     depends_on:
     - postgres
     - repo_clone
     - xsugar
+    - epidocinator
   repo_clone:
     build: repo_clone
     volumes:
