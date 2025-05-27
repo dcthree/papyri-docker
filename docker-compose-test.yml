@@ -21,6 +21,11 @@ services:
     - fuseki
     - indexer
     - sosol
+    - epidocinator
+  epidocinator:
+    build: epidocinator
+    ports:
+    - "8085:8085"
   sosol:
     build: sosol
     ports:
@@ -30,12 +35,14 @@ services:
     - ./sosol-compose:/opt/sosol-compose
     command: /opt/sosol-compose/migrate-and-copy.sh
     links:
+    - "epidocinator"
     - "xsugar"
     - "postgres"
     depends_on:
     - postgres
     - repo_clone
     - xsugar
+    - epidocinator
   repo_clone:
     build: repo_clone
     volumes:
@@ -105,9 +112,7 @@ services:
     environment:
     - SOLR_JAVA_MEM=-Xms1G -Xmx8G
     - SOLR_BACKUP_URL
-    - USE_SOLR_BACKUPS
-    env_file:
-      - .env
+    - USE_SOLR_BACKUPS=true
     command: /bin/sh -c "/home/solr/solr-backup.sh"
     depends_on:
       navigator:
