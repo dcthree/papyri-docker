@@ -1,12 +1,12 @@
 [submodule "sosol"]
 	path = sosol
-	url = https://github.com/sosol/sosol
+	url = https://gitlab.oit.duke.edu/papyri/sosol.git
 [submodule "idp.data"]
 	path = idp.data
 	url = https://github.com/papyri/idp.data
 [submodule "navigator"]
 	path = navigator
-	url = https://github.com/papyri/navigator.git
+	url = https://gitlab.oit.duke.edu/papyri/navigator.git
 [submodule "xsugar"]
 	path = xsugar
 	url = https://github.com/papyri/xsugar.git
