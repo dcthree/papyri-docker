@@ -1,16 +1,19 @@
 include:
   - project: devops/ci-config
+    ref: main
     file:
       - /templates/audit-jobs.gitlab-ci.yml
       - /templates/container-flexible.gitlab-ci.yml
       - /templates/environments.gitlab-ci.yml
       - /templates/tag-release-version.gitlab-ci.yml
+      - /templates/downstream-submodule-workflow.gitlab-ci.yml
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_SUBMODULE_DEPTH: 3
 
 stages:
+  - pre-build
   - build
   - test
 
@@ -18,6 +21,10 @@ stages:
   except:
     variables:
       - $CI_SKIP_JOB_STAGE == $CI_JOB_STAGE
+
+pre-build:
+  stage: pre-build
+  extends: .update_pipeline_submodules
 
 build:
   extends: .build
