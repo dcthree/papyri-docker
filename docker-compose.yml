@@ -24,7 +24,11 @@ services:
     ports:
     - "8085:8085"
   sosol:
-    build: sosol
+    build:
+      context: sosol
+      args:
+        RUBY_VERSION: jruby-9.4.13.0
+        BUNDLE_GEMFILE: Gemfile.jruby-9.4.13.0
     ports:
     - "8080:8080"
     volumes:
