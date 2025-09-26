@@ -13,6 +13,8 @@ if true; then # [ ! -e "/srv/data/papyri.info/sosol/editor/editor.war.lock" ]; t
   mkdir -p /srv/data/papyri.info/sosol
   sed -i -e "s/NUMBERS_SERVER_DOMAIN = 'papyri.info'/NUMBERS_SERVER_DOMAIN = 'httpd'/" /root/sosol/lib/numbers_rdf.rb
   cp -R /root/sosol /srv/data/papyri.info/sosol/editor
+  mkdir -p /srv/data/papyri.info/sosol/editor/db/git
+  git clone --bare /srv/data/papyri.info/sosol/repo/canonical.git /srv/data/papyri.info/sosol/editor/db/git/canonical.git
   cp -Rv /opt/sosol-compose/config/* /srv/data/papyri.info/sosol/editor/config
   echo "Capistrano"
   cd /srv/data/papyri.info/sosol/editor && bundle exec cap local externals:setup
